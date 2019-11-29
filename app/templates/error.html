@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<h1>Произошла ошибка :(</h1>
+
+<h2>{{ msg }}</h2>
+
+<a href="{{ url_for('index_page') }}">На главную</a>
+
+{% endblock %}

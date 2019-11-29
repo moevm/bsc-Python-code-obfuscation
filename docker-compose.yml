@@ -1,0 +1,27 @@
+version: '3.4'
+
+volumes:
+  apache-logs:
+    external: true
+    name: python-code-obfuscation-apache-logs
+  mongo-data:
+    external: true
+    name: python-code-obfuscation-db-data
+
+services:
+  web:
+    build: .
+    image: python-code-obfuscation:latest 
+    ports:
+      - 5000:80
+    volumes:
+      - apache-logs:/var/log/apache2
+    environment:
+      PYTHON_CODE_OBFUSCATION_MONGODB_URL: mongodb
+      PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME: python-code-obfuscation
+    links:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
