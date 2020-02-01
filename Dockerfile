@@ -33,4 +33,3 @@ EXPOSE 80
 COPY --chown=www-data:www-data app /var/www/app/app
 
 ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
-
