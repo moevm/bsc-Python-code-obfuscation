@@ -16,7 +16,7 @@ RUN apt clean && apt-get autoremove
 COPY requirements.txt /tmp
 RUN pip3 --no-cache-dir install -r /tmp/requirements.txt
 
-COPY --chown=www-data:www-data config/wsji-config.wsji /var/www/app-wsji-config.wsji
+COPY --chown=www-data:www-data config/wsji-config.wsji /var/www/app/wsji-config.wsji
 COPY --chown=www-data:www-data config/apache-config.conf /etc/apache2/sites-available/app-apache-config.conf
 
 RUN a2dissite 000-default
@@ -30,7 +30,7 @@ ENV APACHE_LOG_DIR /var/log/apache2
 
 EXPOSE 80
 
-COPY --chown=www-data:www-data app /var/www/app/
+COPY --chown=www-data:www-data app /var/www/app/app
 
 ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
 
