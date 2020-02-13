@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from bson.objectid import ObjectId
 import pymongo
 
 
@@ -58,5 +59,5 @@ class DBEngine:
 
     def get_file_by_id(self, id):
         return self.collection.find_one({
-            '_id': id
+            '_id': ObjectId(id)
         })
