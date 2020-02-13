@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+    {{ super() }}
+
+    <title>{{ file['file_name'] }}</title>
+
+{% endblock %}
+
+{% block content %}
+
+<b>
+    <p>{{ file['file_name'] }}</p>
+    
+    {% if file['tags']|length > 0 %}
+        <p>{{ ' '.join(file['tags']) }}</p>
+    {% else %}
+        <p>тэги отсутствуют</p>
+    {% endif %}
+    
+    <p>{{ file['upload_date'] }}</p>
+</b>
+
+<pre>{{ file['code'] }}</pre>
+
+{% endblock %}
