@@ -49,6 +49,23 @@ def upload():
         inserted_id = app.db_engine.upload(filename, source_code, tags)
 
         return redirect(url_for('obfuscate_settings', id=str(inserted_id)))
+
+
+@app.route('/obfuscate_settings')
+def obfuscate_settings():
+    file_id = request.args.get('id', None)
+
+    if file_id is not None:
+        file = app.db_engine.get_file_by_id(file_id)
+
+        if file is not None:
+            return render_template('obfuscate_settings.html', file=file, file_id=file_id)
+        else:
+            flash(f'неверный параметр id(={file_id})', 'error')
+            return redirect(url_for('index_page'))    
+    else:
+        flash('отсутствует параметр id', 'error')
+        return redirect(url_for('index_page'))
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('error.html', msg='Такой страницы не существует')
