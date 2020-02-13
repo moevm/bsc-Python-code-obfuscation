@@ -23,6 +23,32 @@ def view_code():
     else:
         flash('отсутствует параметр id', 'error')
         return redirect(url_for('index_page'))
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'GET':
+        return render_template('upload.html')
+    else:
+        file = request.files['source_code']
+        
+        filename = file.filename
+        
+        source_code_bytes = file.read()
+        source_code = str(source_code_bytes, 'utf-8')
+
+        tags_str = request.form['tags']
+
+        if len(tags_str) == 0:
+            tags = []
+        else:
+            tags = tags_str.split(',')
+
+        save_to_db = True if request.form['save_to_db'] == 'on' else False
+
+        inserted_id = app.db_engine.upload(filename, source_code, tags)
+
+        return redirect(url_for('obfuscate_settings', id=str(inserted_id)))
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('error.html', msg='Такой страницы не существует')
