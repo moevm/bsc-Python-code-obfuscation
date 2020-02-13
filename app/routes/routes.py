@@ -1,6 +1,7 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, redirect, url_for, flash
 
 from app import app
+
 
 @app.route('/')
 def index_page():
