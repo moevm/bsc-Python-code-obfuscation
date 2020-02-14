@@ -51,8 +51,8 @@ os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_URL'] = args.db_url
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME'] = args.db_name
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION'] = args.db_collection
 
-os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES'] = args.max_tmp_files
-os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES_AGE'] = args.max_tmp_files_age
+os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES'] = str(args.max_tmp_files)
+os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES_AGE'] = str(args.max_tmp_files_age)
 
 from app import app
 
