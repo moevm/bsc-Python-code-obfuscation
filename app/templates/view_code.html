@@ -10,18 +10,24 @@
 
 {% block content %}
 
-<b>
-    <p>{{ file['file_name'] }}</p>
+    {{ super() }}
+
+    <p>Имя файла: <b>{{ file['file_name'] }}</b></p>
     
     {% if file['tags']|length > 0 %}
-        <p>{{ ' '.join(file['tags']) }}</p>
+        <p>Тэги: <b>{{ ' '.join(file['tags']) }}</b></p>
     {% else %}
-        <p>тэги отсутствуют</p>
+        <p>Тэги: <b>отсутствуют</b></p>
     {% endif %}
-    
-    <p>{{ file['upload_date'] }}</p>
-</b>
 
-<pre>{{ file['code'] }}</pre>
+    <p>Дата загрузки: <b>{{ file['upload_date'] }}</b></p>
+
+    {% if 'modified_date' in file %}
+        <p>Дата последней модификации: <b>{{ file['upload_date'] }}</b></p>    
+    {% endif %}
+
+    <hr>
+
+    <pre>{{ file['code'] }}</pre>
 
 {% endblock %}
