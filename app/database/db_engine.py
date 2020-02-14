@@ -29,7 +29,7 @@ class DBEngine:
         if file_name is None:
             file_name = upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
 
-        if tags is None:
+        if tags is None or (len(tags) == 1 and tags[0] == ''):
             tags =[]
 
         return {
@@ -53,7 +53,7 @@ class DBEngine:
         else:
             return objectid.ObjectId(value)
 
-
+    
     @staticmethod
     def generate_id():
         return objectid.ObjectId()
