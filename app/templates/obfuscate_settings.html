@@ -20,13 +20,13 @@
 
     <form action="{{ url_for('obfuscate', id=file_id) }}" method="POST">
         <input id="numbers_obfuscation_checkbox" type="checkbox" name="numbers_obfuscation" checked>
-        <label for="numbers_obfuscation_checkbox">изменить представление чисел</label>
+        <label for="numbers_obfuscation_checkbox">Изменить представление чисел</label>
 
         <input id="add_useless_strings_checkbox" type="checkbox" name="add_useless_strings" checked>
-        <label for="add_useless_strings_checkbox">добавить лишние строки</label>
+        <label for="add_useless_strings_checkbox">Добавить лишние строки</label>
     
-        <input type="reset" value="сбросить">
-        <input type="submit" value="далее">
+        <input type="reset" value="Сбросить">
+        <input type="submit" value="Далее">
     </form>
 
 {% endblock %}

@@ -17,13 +17,13 @@
     <form action="{{ url_for('upload_text') }}" method="POST">
         <input type="text" name="tags" placeholder="Тэги через запятую">
 
-        <input id="source_code_textarea" placeholder="Исходный код" type="textarea" name="source_code" rows=100 cols=80 required>
+        <input id="code_textarea" placeholder="Исходный код" type="textarea" name="code" rows=100 cols=80 required>
         
         <input id="save_to_db_checkbox" type="checkbox" name="save_to_db" checked>
         <label for="save_to_db_checkbox">Сохранить в БД</label>
 
-        <input type="reset" value="сбросить">
-        <input type="submit" value="далее">
+        <input type="reset" value="Сбросить">
+        <input type="submit" value="Далее">
     </form>
 
 {% endblock %}
