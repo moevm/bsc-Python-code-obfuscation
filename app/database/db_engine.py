@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pymongo
-from bson.objectid import ObjectId
+from bson import objectid
 
 
 class DBEngine:
@@ -42,7 +42,7 @@ class DBEngine:
 
     @staticmethod    
     def is_valid_id(id):
-        return ObjectId.is_valid(id)
+        return objectid.ObjectId.is_valid(id)
 
 
     def upload(self, file_name, code, tags):
