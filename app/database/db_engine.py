@@ -20,16 +20,28 @@ class DBEngine:
             ('file_name', pymongo.ASCENDING),
             ('upload_date', pymongo.DESCENDING)
         ])
-      
-    
-    def upload(self, file_name, code, tags):
-        insert_result = self.collection.insert_one({
+
+
+    @staticmethod
+    def serialize_file(file_name, code, tags):
+        upload_date = datetime.utcnow()
+
+        if file_name is None:
+            file_name = upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
+
+        return {
             'file_name': file_name,
             'code': code,
             'tags': tags,
             'length': len(code),
-            'upload_date': datetime.utcnow()
-        })
+            'upload_date': upload_date
+        }
+
+
+    def upload(self, file_name, code, tags):
+        serialized_file = DBEngine.serialize_file(file_name, code, tags)
+
+        insert_result = self.collection.insert_one(serialized_file)
 
         return insert_result.inserted_id
 
