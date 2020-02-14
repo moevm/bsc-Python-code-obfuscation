@@ -27,6 +27,18 @@ arg_parser.add_argument(
     help='data base name'
 )
 
+arg_parser.add_argument(
+    '--max_tmp_files',
+    default=1000, type=int,
+    help='maximum number of simultaneously stored files in RAM'
+)
+
+arg_parser.add_argument(
+    '--max_tmp_files_age',
+    default=86400, type=int,
+    help='maximum age in seconds of temporary files stored in RAM'
+)
+
 args = arg_parser.parse_args()
 
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_URL'] = args.db_url
