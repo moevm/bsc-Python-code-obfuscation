@@ -88,6 +88,15 @@ def obfuscate():
 
 
 @app.errorhandler(404)
+def not_found(e):
+    return render_template('error.html', code=404, msg='Такой страницы не существует.')
+
+
+@app.errorhandler(400)
+def bad_request(e):
+    return render_template('error.html', code=400, msg='Неправильный запрос.')
+
+
 @app.errorhandler(ObjectIdError)
 def invalid_id(e):
     return render_template('error.html', code=400, msg='Неправильный запрос.')
