@@ -3,6 +3,7 @@ import flask
 from app import app
 from app.database.storage_type import StorageType
 
+
 @app.route('/')
 def index_page():
     return flask.render_template('index.html')
