@@ -45,9 +45,9 @@ class DBEngine:
         return objectid.ObjectId.is_valid(id)
 
 
-    @staticmethod
-    def convert_to_id(value):
-        if not DBEngine.is_valid_id(value):
+    @classmethod
+    def convert_to_id(cls, value):
+        if not cls.is_valid_id(value):
             raise ValueError(f'invalid ObjectId(={value})')
         else:
             return objectid.ObjectId(value)
@@ -85,5 +85,5 @@ class DBEngine:
 
     def get_file_by_id(self, id):
         return self.collection.find_one({
-            '_id': ObjectId(id)
+            '_id': id
         })
