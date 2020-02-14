@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    {{ super() }}
+
+    <link rel="stylesheet" href="/static/style/pages/upload_file.css">
+{% endblock %}
+
+{% block content %}
+
+    {{ super() }}
+
+    <form action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="tags" placeholder="Тэги через запятую">
+
+        <input id="source_code_file_select" type="file" name="source_code" required>
+        <label for="source_code_file_select">Выберете файл для загрузки</label>
+        
+        <input id="save_to_db_checkbox" type="checkbox" name="save_to_db" checked>
+        <label for="save_to_db_checkbox">Сохранить в БД</label>
+
+        <input type="reset" value="сбросить">
+        <input type="submit" value="далее">
+    </form>
+
+{% endblock %}
