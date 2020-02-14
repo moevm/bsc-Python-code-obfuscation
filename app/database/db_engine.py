@@ -3,6 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 import pymongo
 
+from app.database.exceptions import *
 
 class DBEngine:
     def __init__(self, mongo_url, db_name, collection_name):
@@ -56,6 +57,9 @@ class DBEngine:
 
 
     def get_file_by_id(self, id):
+        if not ObjectId.is_valid(id):
+            raise ObjectIdError(f'Got invalid ObjectId: {id}', id)
+
         return self.collection.find_one({
             '_id': ObjectId(id)
         })
