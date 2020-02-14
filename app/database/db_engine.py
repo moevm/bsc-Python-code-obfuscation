@@ -1,9 +1,8 @@
 from datetime import datetime
 
-from bson.objectid import ObjectId
 import pymongo
+from bson.objectid import ObjectId
 
-from app.database.exceptions import *
 
 class DBEngine:
     def __init__(self, mongo_url, db_name, collection_name):
@@ -29,6 +28,9 @@ class DBEngine:
         if file_name is None:
             file_name = upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
 
+        if tags is None:
+            tags =[]
+
         return {
             'file_name': file_name,
             'code': code,
@@ -36,6 +38,11 @@ class DBEngine:
             'length': len(code),
             'upload_date': upload_date
         }
+
+
+    @staticmethod    
+    def is_valid_id(id):
+        return ObjectId.is_valid(id)
 
 
     def upload(self, file_name, code, tags):
@@ -69,9 +76,6 @@ class DBEngine:
 
 
     def get_file_by_id(self, id):
-        if not ObjectId.is_valid(id):
-            raise ObjectIdError(f'Got invalid ObjectId: {id}', id)
-
         return self.collection.find_one({
             '_id': ObjectId(id)
         })
