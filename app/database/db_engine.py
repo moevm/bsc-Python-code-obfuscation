@@ -54,8 +54,13 @@ class DBEngine:
             return objectid.ObjectId(value)
 
 
+    @staticmethod
+    def generate_id():
+        return objectid.ObjectId()
+
+
     def upload(self, file_name, code, tags):
-        serialized_file = DBEngine.serialize_file(file_name, code, tags)
+        serialized_file = self.serialize_file(file_name, code, tags)
 
         insert_result = self.collection.insert_one(serialized_file)
 
