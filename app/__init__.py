@@ -4,6 +4,7 @@ import flask
 import expiringdict
 
 from app.database import db_engine
+from app.routes import url_converters
 
 app = flask.Flask(__name__)
 
@@ -18,5 +19,8 @@ app.config['MAX_TMP_FILES_AGE'] = int(os.environ['PYTHON_CODE_OBFUSCATION_MAX_TM
 
 app.db_engine = db_engine.DBEngine(app.config['DB_URL'], app.config['DB_NAME'], app.config['DB_COLLECTION'])
 app.tmp_storage = expiringdict.ExpiringDict(app.config['MAX_TMP_FILES'], app.config['MAX_TMP_FILES_AGE'])
+
+app.url_map.converters['StorageType'] = url_converters.StorageTypeURLConverter
+app.url_map.converters['ObjectId'] = url_converters.ObjectIdURLConverter
 
 from app.routes import routes

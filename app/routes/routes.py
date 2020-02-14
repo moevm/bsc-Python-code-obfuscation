@@ -1,7 +1,6 @@
 from flask import render_template, request, jsonify, redirect, url_for, flash
 
 from app import app
-from app.database.exceptions import *
 
 
 @app.route('/')
@@ -94,9 +93,4 @@ def not_found(e):
 
 @app.errorhandler(400)
 def bad_request(e):
-    return render_template('error.html', code=400, msg='Неправильный запрос.')
-
-
-@app.errorhandler(ObjectIdError)
-def invalid_id(e):
     return render_template('error.html', code=400, msg='Неправильный запрос.')

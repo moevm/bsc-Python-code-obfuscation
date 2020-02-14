@@ -40,9 +40,17 @@ class DBEngine:
         }
 
 
-    @staticmethod    
+    @staticmethod
     def is_valid_id(id):
         return objectid.ObjectId.is_valid(id)
+
+
+    @staticmethod
+    def convert_to_id(value):
+        if not DBEngine.is_valid_id(value):
+            raise ValueError(f'invalid ObjectId(={value})')
+        else:
+            return objectid.ObjectId(value)
 
 
     def upload(self, file_name, code, tags):
