@@ -28,6 +28,12 @@ arg_parser.add_argument(
 )
 
 arg_parser.add_argument(
+    '--db_collection',
+    default='source-codes', type=str,
+    help='data base collection'
+)
+
+arg_parser.add_argument(
     '--max_tmp_files',
     default=1000, type=int,
     help='maximum number of simultaneously stored files in RAM'
@@ -43,6 +49,10 @@ args = arg_parser.parse_args()
 
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_URL'] = args.db_url
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME'] = args.db_name
+os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION'] = args.db_collection
+
+os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES'] = args.max_tmp_files
+os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES_AGE'] = args.max_tmp_files_age
 
 from app import app
 

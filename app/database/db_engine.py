@@ -5,15 +5,13 @@ import pymongo
 
 
 class DBEngine:
-    COLLECTION_NAME = 'source_codes'
-
-    def __init__(self, mongo_url, db_name):
+    def __init__(self, mongo_url, db_name, collection_name):
         self.mongo_url = mongo_url
         self.db_name = db_name
 
-        self.mongo = pymongo.MongoClient(self.mongo_url)      # MongoDB instance
-        self.db = self.mongo[self.db_name]                    # Database
-        self.collection = self.db[DBEngine.COLLECTION_NAME]   # Collection
+        self.mongo = pymongo.MongoClient(self.mongo_url) # MongoDB instance
+        self.db = self.mongo[self.db_name]               # Database
+        self.collection = self.db[collection_name]       # Collection
 
         self.collection.create_index('file_name')
         self.collection.create_index('upload_date')
