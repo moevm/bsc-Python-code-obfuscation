@@ -32,5 +32,6 @@ services:
     volumes:
       - mongo-data:/data/db
   text-to-image:
-    build: app/text_to_image/service
+    build:
+      context: app/text_to_image/service
     image: text-to-image:latest
