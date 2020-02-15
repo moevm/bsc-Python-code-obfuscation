@@ -48,19 +48,14 @@ def upload_text():
     if request_method == 'GET':
         return flask.render_template('upload_text.html')
     elif request_method == 'POST':
-        source_code = flask.request.form['source_code']
+        code = flask.request.form['code']
 
         tags = flask.request.form['tags'].split(',')
 
-        save_to_db = True if flask.request.form['save_to_db'] == 'on' else False
+        save_to_db = 'save_to_db' in flask.request.form
         storage_type = StorageType.DATABASE if save_to_db else StorageType.TEMPORARY
 
-        if storage_type == StorageType.DATABASE:
-            inserted_id = app.db_engine.upload(None, source_code, tags)
-        else:
-            inserted_id = app.db_engine.generate_id()
-            serialized_file = app.db_engine.serialize_file(None, source_code, tags)
-            app.tmp_storage[str(inserted_id)] = serialized_file
+        inserted_id = store_code(storage_type, code, tags)
 
         return flask.redirect(flask.url_for('obfuscate_settings', storage_type=storage_type, id=inserted_id))
     else:
@@ -72,26 +67,21 @@ def upload_file():
     request_method = flask.request.method
 
     if request_method == 'GET':
-        return flask.render_template('upload_text.html')
+        return flask.render_template('upload_file.html')
     elif request_method == 'POST':
         file = flask.request.files['source_code']
         
         file_name = file.filename
         
-        source_code_bytes = file.read()
-        source_code = str(source_code_bytes, 'utf-8')
+        code_bytes = file.read()
+        code = str(code_bytes, 'utf-8')
 
         tags = flask.request.form['tags'].split(',')
 
-        save_to_db = True if flask.request.form['save_to_db'] == 'on' else False
+        save_to_db = 'save_to_db' in flask.request.form
         storage_type = StorageType.DATABASE if save_to_db else StorageType.TEMPORARY
 
-        if storage_type == StorageType.DATABASE:
-            inserted_id = app.db_engine.upload(file_name, source_code, tags)
-        else:
-            inserted_id = app.db_engine.generate_id()
-            serialized_file = app.db_engine.serialize_file(file_name, source_code, tags)
-            app.tmp_storage[str(inserted_id)] = serialized_file
+        inserted_id = store_code(storage_type, code, tags, file_name)
 
         return flask.redirect(flask.url_for('obfuscate_settings', storage_type=storage_type, id=inserted_id))
     else:
