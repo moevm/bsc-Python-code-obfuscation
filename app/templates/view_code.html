@@ -20,10 +20,10 @@
         <p>Тэги: <b>отсутствуют</b></p>
     {% endif %}
 
-    <p>Дата загрузки: <b>{{ file['upload_date'] }}</b></p>
+    <p>Дата загрузки: <b>{{ file['upload_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>
 
     {% if 'modified_date' in file %}
-        <p>Дата последней модификации: <b>{{ file['modified_date'] }}</b></p>    
+        <p>Дата последней модификации: <b>{{ file['modified_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>    
     {% endif %}
 
     <hr>
