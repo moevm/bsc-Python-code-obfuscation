@@ -5,12 +5,12 @@ from bson import objectid
 
 
 class DBEngine:
-    def __init__(self, mongo_url, db_name, collection_name):
-        self.mongo_url = mongo_url
+    def __init__(self, db_url, db_name, collection_name):
+        self.db_url = db_url
         self.db_name = db_name
         self.collection_name = collection_name
 
-        self.client = pymongo.MongoClient(self.mongo_url)
+        self.client = pymongo.MongoClient(self.db_url)
         self.db = self.client[self.db_name]        
         self.collection = self.db[collection_name]
 
