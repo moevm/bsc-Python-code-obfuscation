@@ -1,7 +1,8 @@
 from datetime import datetime
+import tzlocal
 
 import pymongo
-from bson import objectid
+from bson import objectid, CodecOptions
 
 
 class DBEngine:
@@ -13,6 +14,9 @@ class DBEngine:
         self.client = pymongo.MongoClient(self.db_url)
         self.db = self.client[self.db_name]        
         self.collection = self.db[collection_name]
+
+        codec_options = CodecOptions(tz_aware=True, tzinfo=tzlocal.get_localzone())
+        self.collection = self.collection.with_options(codec_options=codec_options)
 
         self.collection.create_index('file_name')
         self.collection.create_index('upload_date')
