@@ -4,6 +4,28 @@ from app import app
 from app.database.storage_type import StorageType
 
 
+def store_code(storage_type, code, tags, file_name=None):
+    if storage_type == StorageType.DATABASE:
+        inserted_id = app.db_engine.upload(file_name, code, tags)
+    elif storage_type == StorageType.TEMPORARY:
+        inserted_id = app.db_engine.generate_id()
+        serialized_file = app.db_engine.serialize_file(file_name, code, tags)
+        app.tmp_storage[str(inserted_id)] = serialized_file
+    else:
+        flask.abort(500)
+
+    return inserted_id
+
+
+def load_code(storage_type, id):
+    if storage_type == StorageType.DATABASE:
+        return app.db_engine.get_file_by_id(id)
+    elif storage_type == StorageType.TEMPORARY:
+        return app.tmp_storage.get(str(id), None)
+    else:
+        flask.abort(500)
+
+
 @app.route('/')
 def index_page():
     return flask.render_template('index.html')
