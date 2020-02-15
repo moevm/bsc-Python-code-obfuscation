@@ -21,7 +21,11 @@
         <label for="numbers_obfuscation_checkbox">Изменить представление чисел</label>
 
         <input id="add_useless_strings_checkbox" type="checkbox" name="add_useless_strings" checked>
-        <label for="add_useless_strings_checkbox">Добавить лишние строки</label>
+        <label for="obfuscate_output_type_select">Вернуть результат как:</label>
+        <select name="obfuscate_output_type" id="obfuscate_output_type_select">
+            <option value="file">Файл</option>
+            <option value="image" selected>Изображение</option>
+        </select>
     
         <input type="reset" value="Сбросить">
         <input type="submit" value="Далее">
