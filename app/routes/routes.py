@@ -31,6 +31,16 @@ def index_page():
     return flask.render_template('index.html')
 
 
+@app.route('/view_code/<StorageType:storage_type>/<ObjectId:id>')
+def view_code(storage_type, id):
+    file = load_code(storage_type, id)
+
+    if file is None:
+        flask.abort(404)
+
+    return flask.render_template('view_code.html', file=file)
+
+
 @app.route('/upload_text', methods=['GET', 'POST'])
 def upload_text():
     request_method = flask.request.method
