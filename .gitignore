@@ -4,6 +4,10 @@ __pycache__/
 # Python virtual env
 venv/
 
+# Node.js
+node_modules/
+npm-debug.log
+
 # IDE
 .vscode/
 .idea/

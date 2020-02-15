@@ -34,6 +34,18 @@ arg_parser.add_argument(
 )
 
 arg_parser.add_argument(
+    '--text_to_image_service_url',
+    default='localhost', type=str,
+    help='text to image service url'
+)
+
+arg_parser.add_argument(
+    '--text_to_image_service_port',
+    default=8080, type=int,
+    help='text to image service port'
+)
+
+arg_parser.add_argument(
     '--max_tmp_files',
     default=1000, type=int,
     help='maximum number of simultaneously stored files in RAM'
@@ -50,6 +62,9 @@ args = arg_parser.parse_args()
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_URL'] = args.db_url
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME'] = args.db_name
 os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION'] = args.db_collection
+
+os.environ['PYTHON_CODE_OBFUSCATION_TEXT_TO_IMAGE_SERVICE_URL'] = args.text_to_image_service_url
+os.environ['PYTHON_CODE_OBFUSCATION_TEXT_TO_IMAGE_SERVICE_PORT'] = str(args.text_to_image_service_port)
 
 os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES'] = str(args.max_tmp_files)
 os.environ['PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES_AGE'] = str(args.max_tmp_files_age)

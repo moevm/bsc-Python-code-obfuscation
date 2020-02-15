@@ -20,11 +20,17 @@ services:
       PYTHON_CODE_OBFUSCATION_MONGODB_URL: mongodb
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME: python-code-obfuscation
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION: source-codes
+      PYTHON_CODE_OBFUSCATION_TEXT_TO_IMAGE_SERVICE_URL: text-to-image
+      PYTHON_CODE_OBFUSCATION_TEXT_TO_IMAGE_SERVICE_PORT: 8080
       PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES: 1000
       PYTHON_CODE_OBFUSCATION_MAX_TMP_FILES_AGE: 86400
     links:
       - mongodb
+      - text-to-image
   mongodb:
     image: mongo:latest
     volumes:
       - mongo-data:/data/db
+  text-to-image:
+    build: app/text_to_image/service
+    image: text-to-image:latest

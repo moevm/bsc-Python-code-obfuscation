@@ -1,0 +1,32 @@
+{
+  "name": "text-to-image-service",
+  "version": "1.0.0",
+  "description": "REST API for convert text to image using bostrom/text-to-image (GitHub) package",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moevm/bsc-Python-code-obfuscation.git"
+  },
+  "keywords": [
+    "text-to-image",
+    "text2image",
+    "text2pic",
+    "canvas",
+    "node-canvas"
+  ],
+  "author": "Aleksandr Rybin ETU \"LETI\" 6304",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moevm/bsc-Python-code-obfuscation/issues"
+  },
+  "homepage": "https://github.com/moevm/bsc-Python-code-obfuscation#readme",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "express": "^4.17.1",
+    "text-to-image": "^2.1.1"
+  }
+}
