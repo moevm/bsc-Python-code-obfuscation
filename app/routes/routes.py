@@ -98,6 +98,15 @@ def upload_file():
         flask.abort(400)
 
 
+@app.route('/obfuscate_settings/<StorageType:storage_type>/<ObjectId:id>')
+def obfuscate_settings(storage_type, id):
+    file = load_code(storage_type, id)
+
+    if file is None:
+        flask.abort(404)
+
+    return flask.render_template('obfuscate_settings.html', file=file, storage_type=storage_type, id=id)
+
 @app.errorhandler(404)
 def not_found(e):
     return flask.render_template('error.html', code=404, msg='Такой страницы не существует.')
