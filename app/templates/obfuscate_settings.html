@@ -17,10 +17,12 @@
     <a href="{{ url_for('view_code', storage_type=storage_type, id=id) }}" target="_blank">{{ file['file_name'] }}</a>
 
     <form action="{{ url_for('obfuscate', storage_type=storage_type, id=id) }}" method="POST">
-        <input id="numbers_obfuscation_checkbox" type="checkbox" name="numbers_obfuscation" checked>
         <label for="numbers_obfuscation_checkbox">Изменить представление чисел</label>
+        <input id="numbers_obfuscation_checkbox" type="checkbox" name="numbers_obfuscation" checked>
 
+        <label for="add_useless_strings_checkbox">Добавить лишние строки</label>
         <input id="add_useless_strings_checkbox" type="checkbox" name="add_useless_strings" checked>
+
         <label for="obfuscate_output_type_select">Вернуть результат как:</label>
         <select name="obfuscate_output_type" id="obfuscate_output_type_select">
             <option value="file">Файл</option>
