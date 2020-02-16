@@ -1,13 +1,13 @@
 import flask
 
 from app import app
-from app.database.storage_type import StorageType
+from app.database import db_engine
 
 
 def store_code(storage_type, code, tags, file_name=None):
-    if storage_type == StorageType.DATABASE:
+    if storage_type == db_engine.StorageType.DATABASE:
         inserted_id = app.db_engine.upload(file_name, code, tags)
-    elif storage_type == StorageType.TEMPORARY:
+    elif storage_type == db_engine.StorageType.TEMPORARY:
         inserted_id = app.db_engine.generate_id()
         serialized_file = app.db_engine.serialize_file(file_name, code, tags)
         app.tmp_storage[str(inserted_id)] = serialized_file
@@ -18,9 +18,9 @@ def store_code(storage_type, code, tags, file_name=None):
 
 
 def load_code(storage_type, id):
-    if storage_type == StorageType.DATABASE:
+    if storage_type == db_engine.StorageType.DATABASE:
         return app.db_engine.get_file_by_id(id)
-    elif storage_type == StorageType.TEMPORARY:
+    elif storage_type == db_engine.StorageType.TEMPORARY:
         return app.tmp_storage.get(str(id), None)
     else:
         flask.abort(500)
@@ -53,7 +53,7 @@ def upload_text():
         tags = flask.request.form['tags'].split(',')
 
         save_to_db = 'save_to_db' in flask.request.form
-        storage_type = StorageType.DATABASE if save_to_db else StorageType.TEMPORARY
+        storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
 
         inserted_id = store_code(storage_type, code, tags)
 
@@ -79,7 +79,7 @@ def upload_file():
         tags = flask.request.form['tags'].split(',')
 
         save_to_db = 'save_to_db' in flask.request.form
-        storage_type = StorageType.DATABASE if save_to_db else StorageType.TEMPORARY
+        storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
 
         inserted_id = store_code(storage_type, code, tags, file_name)
 

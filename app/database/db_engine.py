@@ -1,6 +1,7 @@
+from enum import Enum
 from datetime import datetime
-import tzlocal
 
+import tzlocal
 import pymongo
 from bson import objectid, CodecOptions
 
@@ -97,3 +98,9 @@ class DBEngine:
         return self.collection.find_one({
             '_id': id
         })
+
+
+class StorageType(Enum):
+    TEMPORARY = 'tmp'
+    DATABASE = 'db'
+
