@@ -104,3 +104,8 @@ class StorageType(Enum):
     TEMPORARY = 'tmp'
     DATABASE = 'db'
 
+
+class DBViewType(Enum):
+    ALL = 'all'
+    ANY_TAG_MATCH = 'any_match'
+    ALL_TAGS_MATCH = 'full_match'

@@ -29,3 +29,17 @@ class ObjectIdURLConverter(routing.BaseConverter):
 
     def to_url(self, value):
         return str(value)
+
+
+class DBViewTypeConverter(routing.BaseConverter):
+    def to_python(self, value):
+        try:
+            converted_type = db_engine.DBViewType(value)
+        except ValueError:
+            raise routing.ValidationError('invalid database view type(={value})')
+        else:
+            return converted_type
+
+
+    def to_url(self, value):
+        return value.value

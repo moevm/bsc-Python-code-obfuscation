@@ -27,5 +27,6 @@ app.text_to_image_engine = text_to_image.TextToImageEngine(app.config['TEXT_TO_I
 
 app.url_map.converters['StorageType'] = url_converters.StorageTypeURLConverter
 app.url_map.converters['ObjectId'] = url_converters.ObjectIdURLConverter
+app.url_map.converters['DBViewType'] = url_converters.DBViewTypeConverter
 
 from app.routes import routes
