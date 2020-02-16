@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+    {{ super() }}
+
+    <link rel="stylesheet" href="/static/style/pages/view_tags.css">
+
+    <title>Просмотр хэш-тэгов в БД</title>
+
+{% endblock %}
+
+{% block content %}
+
+    {{ super() }}
+
+    <form action="{{ url_for('view_tags') }}" method="POST">
+        <label for="tags_select">Хэш-тэги для поиска</label>
+        <select name="tags" id="tags_select" multiple size="5" required>
+            {% for tag in tags %}
+                <option value="{{ tag }}">{{ tag }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="search_type_select">Тип поиска</label>
+        <select name="search_type" id="search_type_select">
+            <option value="{{ DBViewType.ANY_TAG_MATCH.value }}">Любое совпадение</option>
+            <option value="{{ DBViewType.ALL_TAGS_MATCH.value }}">Полное совпадение</option>
+        </select>
+
+        <input type="reset" value="Сбросить">
+        <input type="submit" value="Далее">
+    </form>
+
+    <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+
+{% endblock %}

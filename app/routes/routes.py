@@ -41,6 +41,29 @@ def view_code(storage_type, id):
     return flask.render_template('view_code.html', file=file)
 
 
+@app.route('/view_tags', methods=['GET', 'POST'])
+def view_tags():
+    request_method = flask.request.method
+
+    if request_method == 'GET':
+        tags = app.db_engine.get_all_tags()
+        return flask.render_template('view_tags.html', tags=tags, DBViewType=db_engine.DBViewType)
+    elif request_method == 'POST':
+        search_type = flask.request.form['search_type']
+        db_view_type = db_engine.DBViewType(search_type)
+
+        tags = flask.request.form.getlist('tags')
+
+        return flask.redirect(
+            flask.url_for('view_db', 
+                db_view_type=db_view_type, 
+                tags=tags
+            )
+        )
+    else:
+        flask.abort(400)
+
+
 @app.route('/upload_text', methods=['GET', 'POST'])
 def upload_text():
     request_method = flask.request.method
