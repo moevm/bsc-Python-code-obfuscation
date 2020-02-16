@@ -16,6 +16,10 @@
 
     <ul>
         <li>
+            <a href="{{ url_for('view_db', db_view_type=DBViewType.ALL) }}" title="Показать все файлы в базе данных">Показать всё</a>
+        </li>
+
+        <li>
             <a href="{{ url_for('view_tags') }}" title="Поиск в базе данных по выбранным хэш-тэгам">Поиск по хэш-тэгам</a>
         </li>
     </ul>

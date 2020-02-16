@@ -28,7 +28,7 @@ def load_code(storage_type, id):
 
 @app.route('/')
 def index_page():
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', DBViewType=db_engine.DBViewType)
 
 
 @app.route('/view_code/<StorageType:storage_type>/<ObjectId:id>')
@@ -39,6 +39,32 @@ def view_code(storage_type, id):
         flask.abort(404)
 
     return flask.render_template('view_code.html', file=file)
+
+
+@app.route('/view_db/<DBViewType:db_view_type>')
+def view_db(db_view_type):
+    tags = flask.request.args.getlist('tags')
+
+    if db_view_type == db_engine.DBViewType.ALL:
+        files = app.db_engine.get_all_files()
+    elif db_view_type == db_engine.DBViewType.ANY_TAG_MATCH:
+        if len(tags) == 0:
+            flask.abort(400)
+
+        flask.abort(500)
+    elif db_view_type == db_engine.DBViewType.ALL_TAGS_MATCH:
+        if len(tags) == 0:
+            flask.abort(400)
+
+        flask.abort(500)
+    else:
+        flask.abort(500)
+
+    return flask.render_template('view_db.html',
+        files=files, 
+        search_tags=tags, 
+        StorageType=db_engine.StorageType
+    )
 
 
 @app.route('/view_tags', methods=['GET', 'POST'])

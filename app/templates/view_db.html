@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+    {{ super() }}
+
+    <link rel="stylesheet" href="/static/style/pages/view_db.css">
+
+    <title>Поиск по БД</title>
+
+{% endblock %}
+
+{% block content %}
+
+    {{ super() }}
+
+    <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+
+    {% if search_tags|length > 0 %}
+        <p>Поиск по тэгам: <b>{{ ' '.join(search_tags) }}</b></p>
+    {% endif %}
+
+    <ul class="w3-ul w3-large">
+
+        {% for file in files %}
+        
+            <li class="w3-container">          
+                <div class="w3-dropdown-hover">
+                    <p> {{ file['file_name'] }}
+                        {% if file['tags']|length > 0 %}
+                            {% for tag in file['tags'] %}
+                                <span class="w3-tag w3-teal">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </p>
+
+                    <div class="w3-dropdown-content w3-bar-block w3-border w3-light-blue">
+                        <ul class="w3-ul">
+                            <li class="w3-hover-khaki">
+                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+                            </li>
+                            
+                            <li class="w3-hover-khaki">
+                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+                            </li>
+
+                            <li class="w3-hover-khaki">
+                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+                            </li>
+
+                            <li class="w3-hover-khaki">
+                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+        {% endfor %}
+
+    </ul>   
+
+{% endblock %}
