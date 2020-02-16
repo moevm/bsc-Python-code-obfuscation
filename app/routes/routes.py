@@ -107,7 +107,12 @@ def upload_text():
 
         inserted_id = store_code(storage_type, code, tags)
 
-        return flask.redirect(flask.url_for('obfuscate_settings', storage_type=storage_type, id=inserted_id))
+        return flask.redirect(
+            flask.url_for('obfuscate_settings', 
+                storage_type=storage_type, 
+                id=inserted_id
+            )
+        )
     else:
         flask.abort(400)
 
@@ -134,7 +139,12 @@ def upload_file():
 
         inserted_id = store_code(storage_type, code, tags, file_name)
 
-        return flask.redirect(flask.url_for('obfuscate_settings', storage_type=storage_type, id=inserted_id))
+        return flask.redirect(
+            flask.url_for('obfuscate_settings', 
+                storage_type=storage_type, 
+                id=inserted_id
+            )
+        )
     else:
         flask.abort(400)
 
@@ -146,13 +156,24 @@ def obfuscate_settings(storage_type, id):
     if file is None:
         flask.abort(404)
 
-    return flask.render_template('obfuscate_settings.html', file=file, storage_type=storage_type, id=id)
+    return flask.render_template('obfuscate_settings.html', 
+        file=file,
+        storage_type=storage_type,
+        id=id
+    )
+
 
 @app.errorhandler(404)
 def not_found(e):
-    return flask.render_template('error.html', code=404, msg='Такой страницы не существует.')
+    return flask.render_template('error.html',
+        code=404, 
+        msg='Такой страницы не существует.'
+    )
 
 
 @app.errorhandler(400)
 def bad_request(e):
-    return flask.render_template('error.html', code=400, msg='Неправильный запрос.')
+    return flask.render_template('error.html',
+        code=400, 
+        msg='Неправильный запрос.'
+    )
