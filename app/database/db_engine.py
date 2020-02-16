@@ -72,7 +72,7 @@ class DBEngine:
         return insert_result.inserted_id
 
 
-    def get_tags(self):
+    def get_all_tags(self):
         return self.collection.distinct('tags')
 
 
