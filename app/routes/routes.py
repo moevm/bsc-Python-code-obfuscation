@@ -50,7 +50,8 @@ def upload_text():
     elif request_method == 'POST':
         code = flask.request.form['code']
 
-        tags = flask.request.form['tags'].split(',')
+        str_tags = flask.request.form['tags']
+        tags = [] if len(str_tags) == 0 else str_tags.split(',')
 
         save_to_db = 'save_to_db' in flask.request.form
         storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
@@ -76,7 +77,8 @@ def upload_file():
         code_bytes = file.read()
         code = str(code_bytes, 'utf-8')
 
-        tags = flask.request.form['tags'].split(',')
+        str_tags = flask.request.form['tags']
+        tags = [] if len(str_tags) == 0 else str_tags.split(',')
 
         save_to_db = 'save_to_db' in flask.request.form
         storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY

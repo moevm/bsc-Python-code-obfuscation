@@ -37,9 +37,6 @@ class DBEngine:
             local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
             file_name = local_upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
 
-        if tags is None or (len(tags) == 1 and tags[0] == ''):
-            tags =[]
-
         return {
             'file_name': file_name,
             'code': code,
@@ -79,6 +76,10 @@ class DBEngine:
         return self.collection.distinct('tags')
 
 
+    def get_all_files(self):
+        return self.collection.find()
+
+
     def get_files_by_any_tags(self, tags):
         return self.collection.find({
             'tags': {
@@ -98,9 +99,22 @@ class DBEngine:
 
 
     def get_file_by_id(self, id):
-        return self.collection.find_one({
-            '_id': id
-        })
+        return self.collection.find_one({ '_id': id })
+
+
+    def delete_file_by_id(self, id):
+        return self.collection.delete_one({ '_id': id }).deleted_count
+
+
+    def update_file_by_id(self, id, new_code, new_tags):
+        updated_file = {
+            'code': new_code,
+            'tags': new_tags,
+            'length': len(new_code),
+            'modified_date': datetime.utcnow()
+        }
+
+        self.collection.update_one({ '_id': id }, { '$set': updated_file })
 
 
 class StorageType(Enum):
