@@ -1,17 +1,16 @@
 from werkzeug import routing
 
-from app.database import storage_type
 from app.database import db_engine
 
 
 class StorageTypeURLConverter(routing.BaseConverter):
     def to_python(self, value):
         try:
-            converted_storage_type = storage_type.StorageType(value)
+            converted_type = db_engine.StorageType(value)
         except ValueError:
             raise routing.ValidationError('invalid storage type(={value})')
         else:
-            return converted_storage_type
+            return converted_type
 
 
     def to_url(self, value):
