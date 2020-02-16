@@ -2,6 +2,7 @@ from enum import Enum
 from datetime import datetime
 
 import tzlocal
+import pytz
 import pymongo
 from bson import objectid, CodecOptions
 
@@ -32,7 +33,9 @@ class DBEngine:
         upload_date = datetime.utcnow()
 
         if file_name is None:
-            file_name = upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
+            upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
+            local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
+            file_name = local_upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
 
         if tags is None or (len(tags) == 1 and tags[0] == ''):
             tags =[]
