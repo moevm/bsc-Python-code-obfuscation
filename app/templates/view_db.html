@@ -39,9 +39,9 @@
                             <li class="w3-hover-khaki">
                                 <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
                             </li>
-                            
-                            <li class="w3-hover-khaki">
-                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+
+                            <li class="w3-indigo w3-hover-pale-red">
+                                <a href="{{ url_for('obfuscate_settings', storage_type=StorageType.DATABASE, id=file['_id']) }}">Обфускация</a>
                             </li>
 
                             <li class="w3-hover-khaki">
