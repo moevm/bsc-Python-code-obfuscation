@@ -20,7 +20,7 @@
         <p>Поиск по тэгам: <b>{{ ' '.join(search_tags) }}</b></p>
     {% endif %}
 
-    <ul class="w3-ul w3-large">
+    <ul class="w3-ul w3-large w3-animate-opacity">
 
         {% for file in files %}
         
@@ -34,21 +34,21 @@
                         {% endif %}
                     </p>
 
-                    <div class="w3-dropdown-content w3-bar-block w3-border w3-light-blue">
-                        <ul class="w3-ul">
-                            <li class="w3-hover-khaki">
+                    <div class="w3-dropdown-content w3-bar-block w3-border">
+                        <ul class="w3-ul w3-animate-opacity">
+                            <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
                             </li>
 
-                            <li class="w3-indigo w3-hover-pale-red">
+                            <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('obfuscate_settings', storage_type=StorageType.DATABASE, id=file['_id']) }}">Обфускация</a>
                             </li>
 
-                            <li class="w3-hover-khaki">
-                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
+                            <li class="w3-hover-pale-red">
+                                <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}">Редактировать</a>
                             </li>
 
-                            <li class="w3-red w3-hover-pale-red">
+                            <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('delete_file', id=file['_id']) }}">Удалить</a>
                             </li>
                         </ul>
