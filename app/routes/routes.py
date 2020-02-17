@@ -170,7 +170,9 @@ def delete_file(id):
     if deleted_count != 1:
         flask.abort(404)
 
-    return_url = getattr(flask.request, 'referrer', flask.url_for('index_page'))
+    return_url = flask.request.referrer
+    if return_url is None:
+        return_url = flask.url_for('index_page')
 
     return flask.redirect(return_url)
 
