@@ -163,6 +163,18 @@ def obfuscate_settings(storage_type, id):
     )
 
 
+@app.route('/delete/<ObjectId:id>')
+def delete_file(id):
+    deleted_count = app.db_engine.delete_file_by_id(id)
+
+    if deleted_count != 1:
+        flask.abort(404)
+
+    return_url = getattr(flask.request, 'referrer', flask.url_for('index_page'))
+
+    return flask.redirect(return_url)
+
+
 @app.errorhandler(404)
 def not_found(e):
     return flask.render_template('error.html',
