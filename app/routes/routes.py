@@ -179,7 +179,7 @@ def delete_file(id):
 def not_found(e):
     return flask.render_template('error.html',
         code=404, 
-        msg='Такой страницы не существует.'
+        msg='Такой страницы не существует. Проверьте URL.'
     )
 
 
@@ -187,5 +187,5 @@ def not_found(e):
 def bad_request(e):
     return flask.render_template('error.html',
         code=400, 
-        msg='Неправильный запрос.'
+        msg='Неправильный запрос. Проверьте метод запроса и URL.'
     )
