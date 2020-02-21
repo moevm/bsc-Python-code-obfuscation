@@ -5,9 +5,13 @@ import tzlocal
 import pytz
 import pymongo
 from bson import objectid, CodecOptions
+import strgen
 
 
 class DBEngine:
+    rnd_str_gen = strgen.StringGenerator(r'[\a\u]{3-5}[\d]{1-2}')
+
+
     def __init__(self, db_url, db_name, collection_name):
         self.db_url = db_url
         self.db_name = db_name
@@ -28,14 +32,17 @@ class DBEngine:
         ])
 
 
-    @staticmethod
-    def serialize_file(file_name, code, tags):
+    @classmethod
+    def serialize_file(cls, file_name, code, tags):
         upload_date = datetime.utcnow()
 
         if file_name is None:
             upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
             local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
-            file_name = local_upload_date.strftime('%d-%m-%Y_%H-%M-%S_tmp.py')
+
+            random_part = cls.rnd_str_gen.render()
+
+            file_name = local_upload_date.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
 
         return {
             'file_name': file_name,
