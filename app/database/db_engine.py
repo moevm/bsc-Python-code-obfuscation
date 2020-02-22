@@ -4,8 +4,9 @@ from datetime import datetime
 import tzlocal
 import pytz
 import pymongo
-from bson import objectid, CodecOptions
 import strgen
+
+from bson import objectid, CodecOptions
 
 
 class DBEngine:
