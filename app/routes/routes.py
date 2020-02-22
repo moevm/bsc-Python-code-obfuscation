@@ -1,7 +1,10 @@
+import pathlib
+
 import flask
 
 from app import app
 from app.database import db_engine
+from app.obfuscation import obfuscation
 
 
 def store_code(storage_type, code, tags, file_name=None):
@@ -159,8 +162,42 @@ def obfuscate_settings(storage_type, id):
     return flask.render_template('obfuscate_settings.html', 
         file=file,
         storage_type=storage_type,
-        id=id
+        id=id,
+        ObfuscationOutputType=obfuscation.ObfuscationOutputType
     )
+
+
+@app.route('/obfuscate/<StorageType:storage_type>/<ObjectId:id>', methods=['POST'])
+def obfuscate(storage_type, id):
+    file = load_code(storage_type, id)
+
+    if file is None:
+        flask.abort(404)
+
+    output_type = obfuscation.ObfuscationOutputType(flask.request.form['obfuscation_output_type'])
+
+    file_name = pathlib.Path(file['file_name'])
+
+    if output_type == obfuscation.ObfuscationOutputType.TEXT_FILE:
+        path = app.config['TMP_DIR'] / file_name
+
+        with open(path, 'w') as send_file:
+            send_file.write(file['code'])
+    elif output_type == obfuscation.ObfuscationOutputType.IMAGE:
+        file_name = file_name.with_suffix('.png')
+        path = app.config['TMP_DIR'] / file_name
+
+        with open(path, 'wb') as send_file:
+            image_bytes, msg = app.text_to_image_engine.text_to_image_bytes(file['code'])
+            if image_bytes is not None:
+                send_file.write(image_bytes)
+            else:
+                raise RuntimeError(msg)
+    else:
+        raise RuntimeError(f'unknow ObfuscationOutputType: {output_type}')
+
+    path = path.resolve()
+    return flask.send_file(path, as_attachment=True, attachment_filename=str(file_name))
 
 
 @app.route('/delete/<ObjectId:id>')

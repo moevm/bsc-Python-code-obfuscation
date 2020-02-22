@@ -23,10 +23,10 @@
         <label for="add_useless_strings_checkbox">Добавить лишние строки</label>
         <input id="add_useless_strings_checkbox" type="checkbox" name="add_useless_strings" checked>
 
-        <label for="obfuscate_output_type_select">Вернуть результат как:</label>
-        <select name="obfuscate_output_type" id="obfuscate_output_type_select">
-            <option value="file">Файл</option>
-            <option value="image" selected>Изображение</option>
+        <label for="obfuscation_output_type_select">Вернуть результат как:</label>
+        <select name="obfuscation_output_type" id="obfuscation_output_type_select">
+            <option value="{{ ObfuscationOutputType.TEXT_FILE.value }}">Файл</option>
+            <option value="{{ ObfuscationOutputType.IMAGE.value }}" selected>Изображение</option>
         </select>
     
         <input type="reset" value="Сбросить">
