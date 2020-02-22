@@ -199,7 +199,7 @@ def obfuscate(storage_type, id):
 
 
 @app.route('/edit_file/<ObjectId:id>', methods=['GET', 'POST'])
-def edit_file(storage_type, id):
+def edit_file(id):
     request_method = flask.request.method
 
     if request_method == 'GET':
