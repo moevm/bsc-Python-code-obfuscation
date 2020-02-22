@@ -103,7 +103,7 @@ def upload_text():
         code = flask.request.form['code']
 
         str_tags = flask.request.form['tags']
-        tags = [] if len(str_tags) == 0 else [tag.strip() for tag in str_tags.split(',')]
+        tags = [tag.strip() for tag in str_tags.split(',')] if len(str_tags) != 0 else []
 
         save_to_db = 'save_to_db' in flask.request.form
         storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
