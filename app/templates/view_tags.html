@@ -23,8 +23,8 @@
         </select>
 
         <label for="search_type_select">Тип поиска</label>
-        <select name="search_type" id="search_type_select">
-            <option value="{{ DBViewType.ANY_TAG_MATCH.value }}">Любое совпадение</option>
+        <select name="search_type" id="search_type_select" required>
+            <option value="{{ DBViewType.ANY_TAG_MATCH.value }}" selected>Любое совпадение</option>
             <option value="{{ DBViewType.ALL_TAGS_MATCH.value }}">Полное совпадение</option>
         </select>
 
