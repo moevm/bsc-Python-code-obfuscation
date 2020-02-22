@@ -54,12 +54,12 @@ def view_db(db_view_type):
         if len(tags) == 0:
             flask.abort(400)
 
-        flask.abort(500)
+        files = app.db_engine.get_files_by_any_tags(tags)
     elif db_view_type == db_engine.DBViewType.ALL_TAGS_MATCH:
         if len(tags) == 0:
             flask.abort(400)
 
-        flask.abort(500)
+        files = app.db_engine.get_files_by_tags(tags)
     else:
         raise RuntimeError(f'unknow DBViewType: {db_view_type}')
 
