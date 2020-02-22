@@ -12,7 +12,7 @@ def store_code(storage_type, code, tags, file_name=None):
         serialized_file = app.db_engine.serialize_file(file_name, code, tags)
         app.tmp_storage[str(inserted_id)] = serialized_file
     else:
-        flask.abort(500)
+        raise RuntimeError(f'unknow StorageType: {storage_type}')
 
     return inserted_id
 
@@ -23,7 +23,7 @@ def load_code(storage_type, id):
     elif storage_type == db_engine.StorageType.TEMPORARY:
         return app.tmp_storage.get(str(id), None)
     else:
-        flask.abort(500)
+        raise RuntimeError(f'unknow StorageType: {storage_type}')
 
 
 @app.route('/')
@@ -58,7 +58,7 @@ def view_db(db_view_type):
 
         flask.abort(500)
     else:
-        flask.abort(500)
+        raise RuntimeError(f'unknow DBViewType: {db_view_type}')
 
     return flask.render_template('view_db.html',
         files=files, 
@@ -175,6 +175,14 @@ def delete_file(id):
         return_url = flask.url_for('index_page')
 
     return flask.redirect(return_url)
+
+
+@app.errorhandler(500)
+def internal(e):
+    return flask.render_template('error.html',
+        code=500, 
+        msg=e
+    )
 
 
 @app.errorhandler(404)
