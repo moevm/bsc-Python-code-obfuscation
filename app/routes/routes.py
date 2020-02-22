@@ -1,4 +1,5 @@
 import pathlib
+import urllib.parse
 
 import flask
 
@@ -37,7 +38,6 @@ def index_page():
 @app.route('/view_code/<StorageType:storage_type>/<ObjectId:id>')
 def view_code(storage_type, id):
     file = load_code(storage_type, id)
-
     if file is None:
         flask.abort(404)
 
@@ -155,7 +155,6 @@ def upload_file():
 @app.route('/obfuscate_settings/<StorageType:storage_type>/<ObjectId:id>')
 def obfuscate_settings(storage_type, id):
     file = load_code(storage_type, id)
-
     if file is None:
         flask.abort(404)
 
@@ -170,7 +169,6 @@ def obfuscate_settings(storage_type, id):
 @app.route('/obfuscate/<StorageType:storage_type>/<ObjectId:id>', methods=['POST'])
 def obfuscate(storage_type, id):
     file = load_code(storage_type, id)
-
     if file is None:
         flask.abort(404)
 
@@ -200,10 +198,46 @@ def obfuscate(storage_type, id):
     return flask.send_file(path, as_attachment=True, attachment_filename=str(file_name))
 
 
+@app.route('/edit_file/<ObjectId:id>', methods=['GET', 'POST'])
+def edit_file(storage_type, id):
+    request_method = flask.request.method
+
+    if request_method == 'GET':
+        return_url = flask.request.referrer
+        if return_url is None:
+            return_url = flask.url_for('index_page')
+        
+        file = load_code(db_engine.StorageType.DATABASE, id)
+        if file is None:
+            flask.abort(404)
+
+        return flask.render_template('edit_file.html',
+            file=file,
+            id=id,
+            return_url=return_url
+        )
+    elif request_method == 'POST':
+        return_url = flask.request.args.get('return_url', None)
+        if return_url is None:
+            return_url = flask.url_for('index_page')
+        else:
+            return_url = urllib.parse.unquote(return_url)
+
+        new_code = flask.request.form['code']
+        
+        str_new_tags = flask.request.form['tags']
+        new_tags = [] if len(str_new_tags) == 0 else [tag.strip() for tag in str_new_tags.split(',')]
+
+        app.db_engine.update_file_by_id(id, new_code, new_tags)
+
+        return flask.redirect(return_url)
+    else:
+        flask.abort(400)
+
+
 @app.route('/delete/<ObjectId:id>')
 def delete_file(id):
     deleted_count = app.db_engine.delete_file_by_id(id)
-
     if deleted_count != 1:
         flask.abort(404)
 

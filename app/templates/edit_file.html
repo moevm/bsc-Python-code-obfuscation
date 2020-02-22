@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+
+    {{ super() }}
+
+    <link rel="stylesheet" href="/static/style/pages/edit_file.css">
+
+    <title>Редактировать</title>
+
+{% endblock %}
+
+{% block content %}
+
+    {{ super() }}
+
+    <form action="{{ url_for('edit_file', id=id, return_url=return_url) }}" method="POST">
+        <label for="tags_text">Тэги</label>
+        <input id="tags_text" type="text" name="tags" placeholder="Тэги через запятую" value="{{ ', '.join(file['tags']) }}">
+
+        <label for="code_textarea">Исходный код</label>
+        <input id="code_textarea" placeholder="Исходный код" type="textarea" name="code" rows=100 cols=80 required value="{{ file['code'] }}">
+        
+        <input type="reset" value="Сбросить">
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <a href="{{ return_url }}">Назад</a>
+
+{% endblock %}
