@@ -4,8 +4,8 @@
 
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/scripts/w3codecolor.js">
-
+    <script src="/static/scripts/w3codecolor.js"></script>
+    
     <link rel="stylesheet" href="/static/style/pages/view_code.css">
 
     <title>{{ file['file_name'] }}</title>
@@ -32,6 +32,8 @@
 
     <hr>
 
-    <pre class="w3-code pythonHigh notranslate">{{ file['code'] }}</pre>
+    <pre class="pythonHigh notranslate">{{ file['code'] }}</pre>
+
+    <script src="/static/scripts/pages/view_code.js"></script>
 
 {% endblock %}
