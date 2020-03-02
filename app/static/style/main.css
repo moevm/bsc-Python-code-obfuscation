@@ -1,3 +1,8 @@
 body {
     background: #F5F5DC;
 }
+
+input[type=checkbox] {
+    width: max-content;
+    transform: scale(2.5);
+}
