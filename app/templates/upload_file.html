@@ -18,33 +18,33 @@
         <div class="w3-display-middle">
             <div class="w3-card w3-animate-opacity w3-light-gray">
                 <form class="w3-container w3-center" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
-                    <div class="w3-panel w3-xlarge">
+                    <div class="w3-section w3-xlarge">
                         <label for="tags_text">
                             <b>Тэги</b>
                         </label>
                         <input class="w3-input w3-border-0" id="tags_text" type="text" name="tags" placeholder="Тэги через запятую">
                     </div>
             
-                    <div class="w3-panel w3-xlarge">
+                    <div class="w3-section w3-xlarge">
                         <label for="source_code_file_select">
                             <b>Выберете файл для загрузки</b>
                         </label>
                         <input class="w3-input w3-border-0 w3-center" id="source_code_file_select" type="file" name="source_code" required>
                     </div>
                     
-                    <div class="w3-panel w3-xlarge">
+                    <div class="w3-section w3-xlarge">
                         <label for="save_to_db_checkbox">
                             <b>Сохранить в БД</b>
                         </label>
                         <input class="w3-check w3-margin-left" id="save_to_db_checkbox" type="checkbox" name="save_to_db">
                     </div>
             
-                    <div class="w3-panel w3-bar w3-xlarge">
+                    <div class="w3-section w3-bar w3-xlarge">
                         <input class="w3-btn w3-round w3-yellow" type="reset" value="Сбросить">
                         <input class="w3-btn w3-round w3-light-green" type="submit" value="Далее">
                     </div>
                     
-                    <div class="w3-panel w3-xlarge w3-hover-pale-red">
+                    <div class="w3-section w3-xlarge w3-hover-pale-red">
                         <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
                     </div>
                 </form>
