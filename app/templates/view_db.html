@@ -22,7 +22,8 @@
 
         {% if search_tags|length > 0 %}
             <div class="w3-section w3-xlarge">
-                <p> Поиск по тэгам:
+                <p> <i class="fa fa-search"></i> 
+                    Поиск по тэгам:
                     {% for tag in search_tags %}
                         <span class="w3-tag w3-khaki">{{ tag }}</span>
                     {% endfor %}
