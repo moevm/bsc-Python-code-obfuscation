@@ -14,24 +14,49 @@
 
     {{ super() }}
 
-    <form action="{{ url_for('view_tags') }}" method="POST">
-        <label for="tags_select">Хэш-тэги для поиска</label>
-        <select name="tags" id="tags_select" multiple size="5" required>
-            {% for tag in tags %}
-                <option value="{{ tag }}">{{ tag }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="search_type_select">Тип поиска</label>
-        <select name="search_type" id="search_type_select" required>
-            <option value="{{ DBViewType.ANY_TAG_MATCH.value }}" selected>Любое совпадение</option>
-            <option value="{{ DBViewType.ALL_TAGS_MATCH.value }}">Полное совпадение</option>
-        </select>
-
-        <input type="reset" value="Сбросить">
-        <input type="submit" value="Далее">
-    </form>
-
-    <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+    <div class="w3-auto">
+        <div class="w3-display-middle">
+            <div class="w3-card w3-animate-opacity w3-light-gray">
+                <form class="w3-container w3-center"  action="{{ url_for('view_tags') }}" method="POST">
+                    <div class="w3-section w3-xlarge">
+                        <div class="w3-row">
+                            <div class="w3-cell-middle">
+                                <label for="tags_select">
+                                    <b>Тэги для поиска</b>
+                                </label>
+                            </div>
+                            
+                            <div class="w3-cell-middle">
+                                <select name="tags" id="tags_select" multiple size="5" required>
+                                    {% for tag in tags %}
+                                        <option value="{{ tag }}">{{ tag }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="w3-section w3-xlarge">
+                        <label for="search_type_select">
+                            <b>Тип поиска</b>
+                        </label>
+                        <select name="search_type" id="search_type_select" required>
+                            <option value="{{ DBViewType.ANY_TAG_MATCH.value }}" selected>Любое совпадение</option>
+                            <option value="{{ DBViewType.ALL_TAGS_MATCH.value }}">Полное совпадение</option>
+                        </select>
+                    </div>
+                    
+                    <div class="w3-panel w3-bar w3-xlarge">
+                        <input class="w3-btn w3-round w3-yellow" type="reset" value="Сбросить">
+                        <input class="w3-btn w3-round w3-light-green" type="submit" value="Далее">
+                    </div>            
+            
+                    <div class="w3-panel w3-xlarge w3-hover-pale-red">
+                        <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
