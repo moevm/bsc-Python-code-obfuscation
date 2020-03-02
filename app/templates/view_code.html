@@ -16,23 +16,37 @@
 
     {{ super() }}
 
-    <p>Имя файла: <b>{{ file['file_name'] }}</b></p>
-    
-    {% if file['tags']|length > 0 %}
-        <p>Тэги: <b>{{ ' '.join(file['tags']) }}</b></p>
-    {% else %}
-        <p>Тэги: <b>отсутствуют</b></p>
-    {% endif %}
+    <div class="w3-container w3-light-gray w3-animate-opacity">
+        <div class="w3-section w3-xlarge">
+            <p>Имя файла: <b>{{ file['file_name'] }}</b></p>
+        </div>
 
-    <p>Дата загрузки: <b>{{ file['upload_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>
+        <div class="w3-section w3-xlarge">
+            {% if file['tags']|length > 0 %}
+                <p>Тэги:
+                    {% for tag in file['tags'] %}
+                        <span class="w3-tag w3-teal">{{ tag }}</span>
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p>Тэги: <b>отсутствуют</b></p>
+            {% endif %}
+        </div>
 
-    {% if 'modified_date' in file %}
-        <p>Дата последней модификации: <b>{{ file['modified_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>    
-    {% endif %}
+        <div class="w3-section w3-xlarge">
+            <p>Дата загрузки: <b>{{ file['upload_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>
+        </div>
 
-    <hr>
+        {% if 'modified_date' in file %}
+            <div class="w3-section w3-xlarge">
+                <p>Дата последней модификации: <b>{{ file['modified_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>    
+            </div>
+        {% endif %}
 
-    <pre class="pythonHigh notranslate">{{ file['code'] }}</pre>
+        <hr>
+    </div>
+
+    <pre class="w3-xlarge pythonHigh notranslate">{{ file['code'] }}</pre>
 
     <script src="/static/scripts/pages/view_code.js"></script>
 
