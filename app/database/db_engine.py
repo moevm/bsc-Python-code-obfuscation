@@ -36,13 +36,12 @@ class DBEngine:
     @classmethod
     def serialize_file(cls, file_name, code, tags):
         upload_date = datetime.utcnow()
+        
+        upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
+        local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
 
         if file_name is None:
-            upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
-            local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
-
             random_part = cls.rnd_str_gen.render()
-
             file_name = local_upload_date.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
 
         return {
@@ -50,7 +49,7 @@ class DBEngine:
             'code': code,
             'tags': tags,
             'length': len(code),
-            'upload_date': upload_date
+            'upload_date': local_upload_date
         }
 
 
