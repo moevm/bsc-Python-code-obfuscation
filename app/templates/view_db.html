@@ -14,18 +14,25 @@
 
     {{ super() }}
 
-    <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+    <div class="w3-container w3-animate-opacity">
+        <div class="w3-section w3-xlarge w3-hover-pale-red">
+            <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+        </div>
 
-    {% if search_tags|length > 0 %}
-        <p>Поиск по тэгам: <b>{{ ' '.join(search_tags) }}</b></p>
-    {% endif %}
-
-    <ul class="w3-ul w3-large w3-animate-opacity">
+        {% if search_tags|length > 0 %}
+            <div class="w3-section w3-xlarge">
+                <p> Поиск по тэгам:
+                    {% for tag in search_tags %}
+                        <span class="w3-tag w3-khaki">{{ tag }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+        {% endif %}
 
         {% for file in files %}
-        
-            <li class="w3-container">          
-                <div class="w3-dropdown-hover">
+
+            <div class="w3-section w3-xlarge">
+                <div class="w3-dropdown-hover w3-light-gray">
                     <p> {{ file['file_name'] }}
                         {% if file['tags']|length > 0 %}
                             {% for tag in file['tags'] %}
@@ -33,31 +40,31 @@
                             {% endfor %}
                         {% endif %}
                     </p>
-
+                    
                     <div class="w3-dropdown-content w3-bar-block w3-border">
                         <ul class="w3-ul w3-animate-opacity">
                             <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
                             </li>
-
+                
                             <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('obfuscate_settings', storage_type=StorageType.DATABASE, id=file['_id']) }}">Обфускация</a>
                             </li>
-
+                
                             <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('edit_file', id=file['_id']) }}">Редактировать</a>
                             </li>
-
+                
                             <li class="w3-hover-pale-red">
                                 <a href="{{ url_for('delete_file', id=file['_id']) }}">Удалить</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </li>
+            </div>
 
         {% endfor %}
-
-    </ul>   
+    
+    </div>
 
 {% endblock %}
