@@ -20,6 +20,7 @@
                 <form class="w3-container w3-center" action="{{ url_for('edit_file', id=id, return_url=return_url) }}" method="POST">
                     <div class="w3-section w3-xlarge">
                         <label for="tags_text">
+                            <i class="fa fa-tags"></i>
                             <b>Тэги</b>
                         </label>
                         
@@ -28,6 +29,7 @@
 
                     <div class="w3-section w3-xlarge">
                         <label for="code_textarea">
+                            <i class="fa fa-terminal"></i>
                             <b>Исходный код</b>
                         </label>
                         
@@ -40,6 +42,7 @@
                     </div>
                     
                     <div class="w3-section w3-xlarge w3-hover-pale-red">
+                        <i class="fa fa-long-arrow-left"></i>
                         <a href="{{ return_url }}" title="Вернуться к просмотру БД">Назад</a>
                     </div>
                 </form>

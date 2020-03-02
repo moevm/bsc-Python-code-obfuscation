@@ -24,10 +24,12 @@
     
                     <div class="w3-xxlarge">
                         <div class="w3-panel w3-hover-pale-red">
+                            <i class="fa fa-database"></i>
                             <a href="{{ url_for('view_db', db_view_type=DBViewType.ALL) }}" title="Показать все файлы в базе данных">Показать всё</a>
                         </div>
 
                         <div class="w3-panel w3-hover-pale-red">
+                            <i class="fa fa-search"></i>
                             <a href="{{ url_for('view_tags') }}" title="Поиск в базе данных по выбранным хэш-тэгам">Поиск по хэш-тэгам</a>
                         </div>
                     </div>
@@ -40,10 +42,12 @@
 
                     <div class="w3-xxlarge">
                         <div class="w3-panel w3-hover-pale-red">
+                            <i class="fa fa-terminal"></i>
                             <a href="{{ url_for('upload_text') }}" title="Ввести исходный код вручную">Текст</a>
                         </div>
 
                         <div class="w3-panel w3-hover-pale-red">
+                            <i class="fa fa-file"></i>
                             <a href="{{ url_for('upload_file') }}" title="Загрузить файл с исходным кодом">Файл</a>
                         </div>
                     </div>

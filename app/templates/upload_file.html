@@ -20,6 +20,7 @@
                 <form class="w3-container w3-center" action="{{ url_for('upload_file') }}" method="POST" enctype="multipart/form-data">
                     <div class="w3-section w3-xlarge">
                         <label for="tags_text">
+                            <i class="fa fa-tags"></i>
                             <b>Тэги</b>
                         </label>
                         
@@ -28,6 +29,7 @@
             
                     <div class="w3-section w3-xlarge">
                         <label for="source_code_file_select">
+                            <i class="fa fa-file"></i>
                             <b>Выберете файл для загрузки</b>
                         </label>
                         
@@ -36,6 +38,7 @@
                     
                     <div class="w3-section w3-xlarge">
                         <label for="save_to_db_checkbox">
+                            <i class="fa fa-database"></i> 
                             <b>Сохранить в БД</b>
                         </label>
                         
@@ -48,6 +51,7 @@
                     </div>
                     
                     <div class="w3-section w3-xlarge w3-hover-pale-red">
+                        <i class="fa fa-home"></i>
                         <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
                     </div>
                 </form>

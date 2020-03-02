@@ -16,6 +16,7 @@
 
     <div class="w3-container w3-animate-opacity">
         <div class="w3-section w3-xlarge w3-hover-pale-red">
+            <i class="fa fa-home"></i>
             <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
         </div>
 
@@ -44,18 +45,22 @@
                     <div class="w3-dropdown-content w3-bar-block w3-border">
                         <ul class="w3-ul">
                             <li class="w3-hover-pale-red">
+                                <i class="fa fa-external-link"></i>
                                 <a href="{{ url_for('view_code', storage_type=StorageType.DATABASE, id=file['_id']) }}" target="_blank">Просмотр</a>
                             </li>
                 
                             <li class="w3-hover-pale-red">
+                                <i class="fa fa-sign-in"></i>
                                 <a href="{{ url_for('obfuscate_settings', storage_type=StorageType.DATABASE, id=file['_id']) }}">Обфускация</a>
                             </li>
                 
                             <li class="w3-hover-pale-red">
+                                <i class="fa fa-edit"></i>
                                 <a href="{{ url_for('edit_file', id=file['_id']) }}">Редактировать</a>
                             </li>
                 
                             <li class="w3-hover-pale-red">
+                                <i class="fa fa-trash"></i>
                                 <a href="{{ url_for('delete_file', id=file['_id']) }}">Удалить</a>
                             </li>
                         </ul>

@@ -19,6 +19,7 @@
             <div class="w3-card w3-animate-opacity w3-light-gray">
                 <form class="w3-container w3-center" action="{{ url_for('obfuscate', storage_type=storage_type, id=id) }}" method="POST">
                     <div class="w3-section w3-xlarge w3-hover-pale-red">
+                        <i class="fa fa-external-link"></i>
                         <a href="{{ url_for('view_code', storage_type=storage_type, id=id) }}" target="_blank" title="Просмотреть код">{{ file['file_name'] }}</a>
                     </div>
                     
@@ -55,6 +56,7 @@
                     </div>
                     
                     <div class="w3-section w3-xlarge w3-hover-pale-red">
+                        <i class="fa fa-home"></i>
                         <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
                     </div>
                 </form>
