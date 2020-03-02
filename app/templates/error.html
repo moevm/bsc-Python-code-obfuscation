@@ -12,12 +12,22 @@
 
     {{ super() }}
 
-    <h1>Произошла ошибка :(</h1>
+    <div class="w3-auto">
+        <div class="w3-display-middle">
+            <div class="w3-container w3-animate-opacity w3-center">
+                <div class="w3-section w3-xxlarge">
+                    <h1>Произошла ошибка :(</h1>
+                </div>
 
-    <h2>Код <b>{{ code }}</b>. {{ msg }}</h2>
+                <div class="w3-section w3-xxlarge">
+                    <h2>Код <b>{{ code }}</b>. {{ msg }}</h2>
+                </div>
 
-    <h3>
-        <a class="w3-hover-light-gray" href="{{ url_for('index_page') }}">Вернуться на главную страницу.</a>
-    </h3>
+                <div class="w3-section w3-hover-pale-red w3-xlarge">
+                    <a href="{{ url_for('index_page') }}">Вернуться на главную страницу.</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
