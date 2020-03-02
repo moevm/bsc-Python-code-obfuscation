@@ -51,10 +51,17 @@
                     </div>
                 
                     <div class="w3-section w3-bar w3-xlarge">
-                        <input class="w3-btn w3-round w3-yellow" type="reset" value="Сбросить">
-                        <input class="w3-btn w3-round w3-light-green" type="submit" value="Далее">
+                        <button class="w3-btn w3-round w3-yellow" type="reset">
+                            <i class="fa fa-undo"></i>
+                            Сбросить
+                        </button>
+
+                        <button class="w3-btn w3-round w3-light-green" type="submit">
+                            Далее
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
-                    
+
                     <div class="w3-section w3-xlarge w3-hover-pale-red">
                         <i class="fa fa-home"></i>
                         <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
