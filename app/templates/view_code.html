@@ -42,10 +42,8 @@
                 <p>Дата последней модификации: <b>{{ file['modified_date'].strftime('%d.%m.%Y %H:%M') }}</b></p>    
             </div>
         {% endif %}
-
-        <hr>
     </div>
-
+    
     <pre class="w3-xlarge pythonHigh notranslate">{{ file['code'] }}</pre>
 
     <script src="/static/scripts/pages/view_code.js"></script>

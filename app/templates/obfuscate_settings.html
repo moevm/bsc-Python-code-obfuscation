@@ -26,6 +26,7 @@
                         <label for="numbers_obfuscation_checkbox">
                             <b>Изменить представление чисел</b>
                         </label>
+                        
                         <input class="w3-check w3-margin-left" id="numbers_obfuscation_checkbox" type="checkbox" name="numbers_obfuscation" checked>
                     </div>
             
@@ -33,6 +34,7 @@
                         <label for="add_useless_strings_checkbox">
                             <b>Добавить лишние строки</b>
                         </label>
+                        
                         <input class="w3-check w3-margin-left" id="add_useless_strings_checkbox" type="checkbox" name="add_useless_strings" checked>
                     </div>
             
@@ -40,6 +42,7 @@
                         <label for="obfuscation_output_type_select">
                             <b>Вернуть результат как:</b>
                         </label>
+                        
                         <select name="obfuscation_output_type" id="obfuscation_output_type_select" required>
                             <option value="{{ ObfuscationOutputType.TEXT_FILE.value }}">Файл</option>
                             <option value="{{ ObfuscationOutputType.IMAGE.value }}" selected>Изображение</option>
