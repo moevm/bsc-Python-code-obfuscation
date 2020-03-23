@@ -27,9 +27,12 @@ class TextToImageEngine:
 
         endpoint = f'http://{self.service_url}:{self.service_port}/api/text-to-image'
 
-        request = requests.post(endpoint, json=payload)
-
-        response = request.json()
+        try:
+            request = requests.post(endpoint, json=payload)
+        except Exception:
+            return None, 'error request to text to image API'
+        else:
+            response = request.json()
 
         if response['status'] == 'success':
             image_bytes = w3lib.url.parse_data_uri(response['dataURI']).data
