@@ -15,9 +15,9 @@
     {{ super() }}
 
     <div class="w3-container w3-animate-opacity">
-        <div class="w3-section w3-xlarge w3-hover-pale-red">
+        <div class="w3-section w3-xlarge">
             <i class="fa fa-home"></i>
-            <a href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
+            <a class="w3-hover-pale-red" href="{{ url_for('index_page') }}">Вернуться на главную страницу</a>
         </div>
 
         {% if search_tags|length > 0 %}
