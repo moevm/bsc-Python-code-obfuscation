@@ -249,6 +249,7 @@ def delete_file(id):
 
 
 @app.errorhandler(500)
+@app.errorhandler(RuntimeError)
 def internal(e):
     return flask.render_template('error.html',
         code=500, 
