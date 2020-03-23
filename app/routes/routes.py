@@ -174,18 +174,18 @@ def obfuscate(storage_type, id):
 
     output_type = obfuscation.ObfuscationOutputType(flask.request.form['obfuscation_output_type'])
 
-    file_name = pathlib.Path(file['file_name'])
+    file_name_as_path = pathlib.Path(file['file_name'])
+    file_name_as_path = file_name_as_path.with_suffix('.obfuscated' + file_name_as_path.suffix)
 
     if output_type == obfuscation.ObfuscationOutputType.TEXT_FILE:
-        path = app.config['TMP_DIR'] / file_name
+        file_path = app.config['TMP_DIR'] / file_name_as_path
 
-        with open(path, 'w') as send_file:
+        with open(file_path, 'w') as send_file:
             send_file.write(file['code'])
     elif output_type == obfuscation.ObfuscationOutputType.IMAGE:
-        file_name = file_name.with_suffix('.png')
-        path = app.config['TMP_DIR'] / file_name
+        file_path = app.config['TMP_DIR'] / file_name_as_path.with_suffix('.png')
 
-        with open(path, 'wb') as send_file:
+        with open(file_path, 'wb') as send_file:
             image_bytes, msg = app.text_to_image_engine.text_to_image_bytes(file['code'])
             if image_bytes is not None:
                 send_file.write(image_bytes)
@@ -194,8 +194,8 @@ def obfuscate(storage_type, id):
     else:
         raise RuntimeError(f'unknow ObfuscationOutputType: {output_type}')
 
-    path = path.resolve()
-    return flask.send_file(path, as_attachment=True, attachment_filename=str(file_name))
+    file_path = file_path.resolve()
+    return flask.send_file(file_path, as_attachment=True, attachment_filename=str(file_path.name))
 
 
 @app.route('/edit_file/<ObjectId:id>', methods=['GET', 'POST'])
