@@ -181,6 +181,23 @@ def obfuscate(storage_type, id):
         flask.request.form['obfuscation_output_type']
     )
 
+    for key1 in obfuscation_settings.settings:
+        for key2 in obfuscation_settings.settings[key1]:
+            for key3 in obfuscation_settings.settings[key1][key2]:
+                key = '.'.join([key1, key2, key3])
+                value = flask.request.form.get(key, None)
+
+                if value:
+                    if value == 'on':
+                        obfuscation_settings.settings[key1][key2][key3] = True
+                    else:
+                        try:
+                            obfuscation_settings.settings[key1][key2][key3] = int(value)
+                        except ValueError:
+                            raise RuntimeError('unknown obfuscation parameter type')
+                else:
+                    obfuscation_settings.settings[key1][key2][key3] = False
+
     file_name_as_path = pathlib.Path(file['file_name'])
     file_name_as_path = file_name_as_path.with_suffix(
         '.obfuscated' + file_name_as_path.suffix
