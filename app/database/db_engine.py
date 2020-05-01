@@ -9,7 +9,7 @@ import strgen
 from bson import objectid, CodecOptions
 
 
-def get_current_local_utc_time():
+def get_current_local_utc_date_time():
 
     current_utc_date = datetime.utcnow()
 
@@ -39,16 +39,18 @@ class DBEngine:
 
     @classmethod
     def serialize_file(cls, file_name, code, tags):
+        upload_date_time = get_current_local_utc_date_time()
+
         if file_name is None:
             random_part = cls.rnd_str_gen.render()
-            file_name = local_upload_date.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
+            file_name = upload_date_time.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
 
         return {
             'file_name': file_name,
             'code': code,
             'tags': tags,
             'length': len(code),
-            'upload_date': get_current_local_utc_time()
+            'upload_date': upload_date_time
         }
 
     @staticmethod
@@ -104,7 +106,7 @@ class DBEngine:
             'code': new_code,
             'tags': new_tags,
             'length': len(new_code),
-            'modified_date': get_current_local_utc_time()
+            'modified_date': get_current_local_utc_date_time()
         }
 
         self.collection.update_one({ '_id': id}, { '$set': updated_file})
