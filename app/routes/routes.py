@@ -5,7 +5,7 @@ import flask
 
 from app import app
 from app.database import db_engine
-from app.obfuscation import obfuscation
+from app.obfuscation import obfuscation, obfuscation_settings
 from app.routes.msg_colors import FlaskFlashMessageType
 
 
