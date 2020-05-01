@@ -182,7 +182,7 @@ def obfuscate(storage_type, id):
     if output_type == obfuscation_types.ObfuscationOutputType.TEXT_FILE:
         file_path = app.config['TMP_DIR'] / file_name_as_path
 
-        with open(file_path, 'w') as send_file:
+        with open(file_path, 'w', encoding='utf-8') as send_file:
             send_file.write(obfuscated_code)
     elif output_type == obfuscation_types.ObfuscationOutputType.IMAGE:
         file_path = app.config['TMP_DIR'] / file_name_as_path.with_suffix('.png')
