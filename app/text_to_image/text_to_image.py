@@ -4,7 +4,7 @@ import w3lib.url
 
 class TextToImageEngine:
     GENERATE_OPTIONS = {
-        'maxWidth': 640,
+        'maxWidth': 1280,
         'fontFamily': 'Consolas',
         'fontSize': 16,
         'lineHeight': 18,
