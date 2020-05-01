@@ -25,19 +25,19 @@
                         <a href="{{ url_for('view_code', storage_type=storage_type, id=id) }}" target="_blank" title="Просмотреть код">{{ file['file_name'] }}</a>
                     </div>
 
-                    <button onclick="w3Show('syntax_obfuscation_section')" type="button" class="w3-btn w3-block w3-margin-down w3-khaki w3-xlarge">
+                    <button onclick="w3Show('syntax_obfuscation_section')" type="button" class="w3-btn w3-block w3-margin-down w3-khaki w3-hover-gray w3-xlarge">
                         <i class="fa fa-chevron-down"></i>
                         Синтаксис
                     </button>
                     
                     <div id="syntax_obfuscation_section" class="w3-hide w3-light-blue">
-                        <button onclick="w3Show('syntax_numbers_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('syntax_numbers_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Числа
                         </button>
                         
                         <div id="syntax_numbers_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="syntax_numbers_obfuscation_checkbox">
                                     Изменить представление чисел
                                 </label>
@@ -45,7 +45,7 @@
                                 <input name="syntax.num_obfuscation.is_on" id="syntax_numbers_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="syntax_int_numbers_obfuscation_checkbox">
                                     Изменить представление целых чисел
                                 </label>
@@ -53,7 +53,7 @@
                                 <input name="syntax.num_obfuscation.int" id="syntax_int_numbers_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="syntax_float_numbers_obfuscation_checkbox">
                                     Изменить представление чисел с плавающей точкой
                                 </label>
@@ -61,7 +61,7 @@
                                 <input name="syntax.num_obfuscation.float" id="syntax_float_numbers_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="syntax_complex_numbers_obfuscation_checkbox">
                                     Изменить представление комплексных чисел
                                 </label>
@@ -70,13 +70,13 @@
                             </div>
                         </div>
 
-                        <button onclick="w3Show('syntax_code_style_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('syntax_code_style_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Стиль кода
                         </button>
 
                         <div id="syntax_code_style_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="syntax_code_style_obfuscation_checkbox">
                                     Изменить стиль кода
                                 </label>
@@ -86,19 +86,19 @@
                         </div>
                     </div>
 
-                    <button onclick="w3Show('semantic_obfuscation_section')" type="button" class="w3-btn w3-block w3-margin-top w3-khaki w3-xlarge">
+                    <button onclick="w3Show('semantic_obfuscation_section')" type="button" class="w3-btn w3-block w3-margin-top w3-khaki w3-hover-gray w3-xlarge">
                         <i class="fa fa-chevron-down"></i>
                         Семантика
                     </button>
                     
                     <div id="semantic_obfuscation_section" class="w3-hide w3-light-blue">
-                        <button onclick="w3Show('semantic_numbers_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('semantic_numbers_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Числа
                         </button>
                         
                         <div id="semantic_numbers_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_numbers_obfuscation_checkbox">
                                     Изменить представление чисел
                                 </label>
@@ -106,7 +106,7 @@
                                 <input name="semantic.num_obfuscation.is_on" id="semantic_numbers_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_int_numbers_obfuscation_checkbox">
                                     Обфускация целых чисел
                                 </label>
@@ -114,7 +114,7 @@
                                 <input name="semantic.num_obfuscation.int_obfuscations" id="semantic_int_numbers_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_int_numbers_obfuscation_call_repr_checkbox">
                                     Замена целых чисел на вызов функции
                                 </label>
@@ -122,7 +122,7 @@
                                 <input name="semantic.num_obfuscation.int_call_repr" id="semantic_int_numbers_obfuscation_call_repr_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_float_numbers_obfuscation_call_repr_checkbox">
                                     Замена чисел c плавающей точкой на вызов функции
                                 </label>
@@ -130,7 +130,7 @@
                                 <input name="semantic.num_obfuscation.float_call_repr" id="semantic_float_numbers_obfuscation_call_repr_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_complex_numbers_obfuscation_call_repr_checkbox">
                                     Замена комплексных чисел на вызов функции
                                 </label>
@@ -139,13 +139,13 @@
                             </div>
                         </div>
 
-                        <button onclick="w3Show('semantic_strings_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('semantic_strings_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Строки
                         </button>
                         
                         <div id="semantic_strings_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_strings_obfuscation_checkbox">
                                     Изменить представление строк
                                 </label>
@@ -153,7 +153,7 @@
                                 <input name="semantic.str_obfuscation.is_on" id="semantic_strings_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_strings_obfuscations_checkbox">
                                     Обфускация строк
                                 </label>
@@ -161,7 +161,7 @@
                                 <input name="semantic.str_obfuscation.str_obfuscations" id="semantic_strings_obfuscations_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_strings_obfuscation_call_repr_checkbox">
                                     Замена строк на вызов функции
                                 </label>
@@ -170,13 +170,13 @@
                             </div>
                         </div>
 
-                        <button onclick="w3Show('semantic_useless_expressions_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('semantic_useless_expressions_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Бесполезный код
                         </button>
                         
                         <div id="semantic_useless_expressions_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_useless_expressions_obfuscation_checkbox">
                                     Добавить лишний код
                                 </label>
@@ -184,7 +184,7 @@
                                 <input name="semantic.useless_expressions.is_on" id="semantic_useless_expressions_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_useless_expressions_global_obfuscation_range">
                                     Кол-во лишних блоков в глобальной области видимости
                                 </label>
@@ -197,7 +197,7 @@
                                 <b><p id="semantic_useless_expressions_global_obfuscation_range_view">1</p></b>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_useless_expressions_functions_obfuscation_range">
                                     Кол-во лишних блоков в функциях
                                 </label>
@@ -213,13 +213,13 @@
                             </div>
                         </div>
 
-                        <button onclick="w3Show('semantic_vars_renames_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-large">
+                        <button onclick="w3Show('semantic_vars_renames_obfuscation_section')" type="button" class="w3-btn w3-block w3-lime w3-hover-gray w3-large">
                             <i class="fa fa-chevron-down"></i>
                             Переименование переменных
                         </button>
                         
                         <div id="semantic_vars_renames_obfuscation_section" class="w3-hide">
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_vars_renames_obfuscation_checkbox">
                                     Переименовать переменные
                                 </label>
@@ -227,7 +227,7 @@
                                 <input name="semantic.vars_renames.is_on" id="semantic_vars_renames_obfuscation_checkbox" type="checkbox" class="w3-check w3-margin-left" checked>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_vars_renames_min_len_obfuscation_range">
                                     Минимальная длина новых имён переменных
                                 </label>
@@ -242,7 +242,7 @@
                                 <b><p id="semantic_vars_renames_min_len_obfuscation_range_view">5</p></b>
                             </div>
 
-                            <div class="w3-section">
+                            <div class="w3-section w3-hover-gray">
                                 <label for="semantic_vars_renames_max_len_obfuscation_range">
                                     Максимальная длина новых имён переменных
                                 </label>
