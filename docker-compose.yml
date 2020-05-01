@@ -17,6 +17,7 @@ services:
     volumes:
       - apache-logs:/var/log/apache2
     environment:
+      TZ: Europe/Moscow
       PYTHON_CODE_OBFUSCATION_MONGODB_URL: mongodb
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME: python-code-obfuscation
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION: source-codes
