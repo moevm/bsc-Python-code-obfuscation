@@ -46,8 +46,7 @@ class ObfuscateBySyntaxGenerator(astor.SourceGenerator):
 
     def _handle_numeric_constant(self, value):
         if not self.settings['num_obfuscation']['is_on']:
-            return super(ObfuscateBySyntaxGenerator,
-                         self)._handle_numeric_constant(value)
+            return super(ObfuscateBySyntaxGenerator, self)._handle_numeric_constant(value)
 
         def obfuscate_num(num):
 
@@ -80,9 +79,7 @@ class ObfuscateBySyntaxGenerator(astor.SourceGenerator):
             elif isinstance(num, float):
                 return obfuscate_float(num)
             else:
-                return RuntimeError(
-                    'unexpected number type for syntax obfuscation'
-                )
+                return RuntimeError('unexpected number type for syntax obfuscation')
 
         def part(p, imaginary, with_obfuscation=True):
 
@@ -109,8 +106,7 @@ class ObfuscateBySyntaxGenerator(astor.SourceGenerator):
         x = value
 
         if isinstance(x, complex):
-            with_complex_obfuscation = self.settings['num_obfuscation'][
-                'complex']
+            with_complex_obfuscation = self.settings['num_obfuscation']['complex']
 
             real = part(x.real, False, with_complex_obfuscation)
             imag = part(x.imag, True, with_complex_obfuscation)
@@ -119,9 +115,7 @@ class ObfuscateBySyntaxGenerator(astor.SourceGenerator):
                 s = '(%s+0j)' % real
             else:
                 # x has nonzero real and imaginary parts.
-                s = '(%s%s%s)' % (
-                    real, [ '+', ''][imag.startswith('-')], imag
-                )
+                s = '(%s%s%s)' % ( real, [ '+', ''][imag.startswith('-')], imag )
         else:
             s = part(x, False)
 

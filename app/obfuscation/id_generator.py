@@ -14,9 +14,7 @@ class UniqueObfuscatedIdGenerator:
     def _generate_random_name(len):
 
         first_symbol = random.choice(string.ascii_letters)
-        remaining_symbols = ''.join(
-            random.choices(string.ascii_letters + string.digits, k=len - 1)
-        )
+        remaining_symbols = ''.join(random.choices(string.ascii_letters + string.digits, k=len - 1))
 
         random_name = first_symbol + remaining_symbols
 
@@ -33,9 +31,7 @@ class UniqueObfuscatedIdGenerator:
 
         return random_name
 
-    def get_random_name_random_len(
-        self, min_len=DEFAULT_ID_LENGTH, max_len=DEFAULT_ID_LENGTH
-    ):
+    def get_random_name_random_len(self, min_len=DEFAULT_ID_LENGTH, max_len=DEFAULT_ID_LENGTH):
 
         random_len = random.randint(min_len, max_len)
 

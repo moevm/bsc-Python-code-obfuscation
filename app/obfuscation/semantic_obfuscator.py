@@ -705,8 +705,7 @@ class Obfuscator(ast.NodeTransformer):
 
         self.additional_function_defs = []
 
-        self.num_useless_expressions_in_functions = self.settings[
-            'useless_expressions']['functions']
+        self.num_useless_expressions_in_functions = self.settings['useless_expressions']['functions']
 
     def visit_Module(self, node):
 
@@ -730,9 +729,7 @@ class Obfuscator(ast.NodeTransformer):
         if not self.settings['useless_expressions']['is_on']:
             return node
 
-        num_useless_expressions = random.randint(
-            0, self.num_useless_expressions_in_functions
-        )
+        num_useless_expressions = random.randint(0, self.num_useless_expressions_in_functions)
         self.num_useless_expressions_in_functions -= num_useless_expressions
 
         for _ in range(num_useless_expressions):
@@ -787,11 +784,7 @@ class Obfuscator(ast.NodeTransformer):
 
         if obfuscation_type == StrObfuscationType.CALL_REPR:
             function_name = self._make_function(node)
-            return ast.Call(
-                func=ast.Name(id=function_name, ctx=ast.Load),
-                args=[],
-                keywords=[]
-            )
+            return ast.Call(func=ast.Name(id=function_name, ctx=ast.Load), args=[], keywords=[])
         elif obfuscation_type == StrObfuscationType.OBFUSCATIONS:
             randstr = self.id_generator.get_random_name_random_len(max_len=10)
 
@@ -801,11 +794,7 @@ class Obfuscator(ast.NodeTransformer):
 
                 # 'a' -> chr(97)
                 lambda x: ast.Call(
-                    func=ast.Name(id='chr', ctx=ast.Load),
-                    args=[ast.Num(n=x)],
-                    keywords=[],
-                    starargs=None,
-                    kwargs=None
+                    func=ast.Name(id='chr', ctx=ast.Load), args=[ast.Num(n=x)], keywords=[], starargs=None, kwargs=None
                 ),
             ]
 
@@ -814,33 +803,24 @@ class Obfuscator(ast.NodeTransformer):
                 lambda x: ast.Str(s=x),
 
                 # 'abc' -> 'a' + 'bc'
-                lambda x: ast.BinOp(
-                    left=ast.Str(s=x[:len(x) // 2]),
-                    op=ast.Add(),
-                    right=ast.Str(s=x[len(x) // 2:])
-                ),
+                lambda x: ast.BinOp(left=ast.Str(s=x[:len(x) // 2]), op=ast.Add(), right=ast.Str(s=x[len(x) // 2:])),
 
                 # 'abc' -> 'cba'[::-1]
                 lambda x: ast.Subscript(
-                    value=ast.Str(s=x[::-1]),
-                    slice=ast.Slice(lower=None, upper=None, step=ast.Num(n=-1)),
-                    ctx=ast.Load
+                    value=ast.Str(s=x[::-1]), slice=ast.Slice(lower=None, upper=None, step=ast.Num(n=-1)), ctx=ast.Load
                 ),
 
                 # 'abc' -> ''.join(_x for _x in reversed('cba'))
                 lambda x: ast.Call(
-                    func=ast.
-                    Attribute(value=ast.Str(s=''), attr='join', ctx=ast.Load),
+                    func=ast.Attribute(value=ast.Str(s=''), attr='join', ctx=ast.Load),
                     args=[
                         ast.GeneratorExp(
                             elt=ast.Name(id=randstr, ctx=ast.Load),
                             generators=[
                                 ast.comprehension(
-                                    target=ast.
-                                    Name(id=randstr, ctx=ast.Store()),
+                                    target=ast.Name(id=randstr, ctx=ast.Store()),
                                     iter=ast.Call(
-                                        func=ast.
-                                        Name(id='reversed', ctx=ast.Load),
+                                        func=ast.Name(id='reversed', ctx=ast.Load),
                                         args=[ast.Str(s=x[::-1])],
                                         keywords=[],
                                         starargs=None,
@@ -865,9 +845,7 @@ class Obfuscator(ast.NodeTransformer):
                     0.7,
                 ], k=1)[0](ord(s))
             else:
-                return random.choices(
-                    table, weights=[ 0.1, 0.2, 0.35, 0.35 ], k=1
-                )[0](s)
+                return random.choices(table, weights=[ 0.1, 0.2, 0.35, 0.35 ], k=1)[0](s)
         else:
             raise RuntimeError('unsupported ast.Str obfuscation type')
 
@@ -891,24 +869,16 @@ class Obfuscator(ast.NodeTransformer):
 
             if obfuscate_num_type == IntNumReprObfuscateType.BIN:
                 return ast.Call(
-                    func=ast.Name(id='int', ctx=ast.Load),
-                    args=[ast.Str(s=bin(num)),
-                          ast.Num(n=2)],
-                    keywords=[]
+                    func=ast.Name(id='int', ctx=ast.Load), args=[ast.Str(s=bin(num)), ast.Num(n=2)], keywords=[]
                 )
             elif obfuscate_num_type == IntNumReprObfuscateType.OCT:
                 return ast.Call(
-                    func=ast.Name(id='int', ctx=ast.Load),
-                    args=[ast.Str(s=oct(num)),
-                          ast.Num(n=8)],
-                    keywords=[]
+                    func=ast.Name(id='int', ctx=ast.Load), args=[ast.Str(s=oct(num)), ast.Num(n=8)], keywords=[]
                 )
             elif obfuscate_num_type == IntNumReprObfuscateType.HEX:
                 return ast.Call(
-                    func=ast.Name(id='int', ctx=ast.Load),
-                    args=[ast.Str(s=hex(num)),
-                          ast.Num(n=16)],
-                    keywords=[]
+                    func=ast.Name(id='int', ctx=ast.Load), args=[ast.Str(s=hex(num)),
+                                                                 ast.Num(n=16)], keywords=[]
                 )
             else:
                 return node
@@ -925,11 +895,7 @@ class Obfuscator(ast.NodeTransformer):
             q, r = trunc_divmod(num, d)
 
             return ast.BinOp(
-                left=ast.BinOp(
-                    left=ast.Num(q), op=ast.Mult(), right=ast.Num(d)
-                ),
-                op=ast.Add(),
-                right=ast.Num(r)
+                left=ast.BinOp(left=ast.Num(q), op=ast.Mult(), right=ast.Num(d)), op=ast.Add(), right=ast.Num(r)
             )
 
         def obf3():
@@ -943,11 +909,7 @@ class Obfuscator(ast.NodeTransformer):
             # num = c - d = (a * b) - d
 
             return ast.BinOp(
-                left=ast.BinOp(
-                    left=ast.Num(a), op=ast.Mult(), right=ast.Num(b)
-                ),
-                op=ast.Sub(),
-                right=ast.Num(d)
+                left=ast.BinOp(left=ast.Num(a), op=ast.Mult(), right=ast.Num(b)), op=ast.Sub(), right=ast.Num(d)
             )
 
         def obf4():
@@ -972,14 +934,9 @@ class Obfuscator(ast.NodeTransformer):
 
         if obfuscation_type == IntObfuscationType.CALL_REPR:
             function_name = self._make_function(node)
-            return ast.Call(
-                func=ast.Name(id=function_name, ctx=ast.Load),
-                args=[],
-                keywords=[]
-            )
+            return ast.Call(func=ast.Name(id=function_name, ctx=ast.Load), args=[], keywords=[])
         elif obfuscation_type == IntObfuscationType.OBFUSCATIONS:
-            return random.choices(table, weights=[ 0.1, 0.35, 0.35, 0.2 ],
-                                  k=1)[0]()
+            return random.choices(table, weights=[ 0.1, 0.35, 0.35, 0.2 ], k=1)[0]()
         else:
             raise RuntimeError('unsupported ast.Num with int obfuscation type')
 
@@ -987,11 +944,7 @@ class Obfuscator(ast.NodeTransformer):
 
         if self.settings['num_obfuscation']['float_call_repr']:
             function_name = self._make_function(node)
-            return ast.Call(
-                func=ast.Name(id=function_name, ctx=ast.Load),
-                args=[],
-                keywords=[]
-            )
+            return ast.Call(func=ast.Name(id=function_name, ctx=ast.Load), args=[], keywords=[])
         else:
             return node
 
@@ -999,11 +952,7 @@ class Obfuscator(ast.NodeTransformer):
 
         if self.settings['num_obfuscation']['complex_call_repr']:
             function_name = self._make_function(node)
-            return ast.Call(
-                func=ast.Name(id=function_name, ctx=ast.Load),
-                args=[],
-                keywords=[]
-            )
+            return ast.Call(func=ast.Name(id=function_name, ctx=ast.Load), args=[], keywords=[])
         else:
             return node
 
@@ -1024,18 +973,12 @@ class Obfuscator(ast.NodeTransformer):
             x = self.id_generator.get_random_name_random_len(max_len=10)
 
             return [
-                ast.Assign(
-                    targets=[ast.Name(id=a, ctx=ast.Store)], value=ast.Num(0)
-                ),
-                ast.Assign(
-                    targets=[ast.Name(id=b, ctx=ast.Store)], value=ast.Num(1)
-                ),
+                ast.Assign(targets=[ast.Name(id=a, ctx=ast.Store)], value=ast.Num(0)),
+                ast.Assign(targets=[ast.Name(id=b, ctx=ast.Store)], value=ast.Num(1)),
                 ast.Assign(
                     targets=[ast.Name(id=x, ctx=ast.Store)],
                     value=ast.BinOp(
-                        left=ast.Name(id=a, ctx=ast.Load),
-                        op=ast.Add(),
-                        right=ast.Name(id=b, ctx=ast.Load)
+                        left=ast.Name(id=a, ctx=ast.Load), op=ast.Add(), right=ast.Name(id=b, ctx=ast.Load)
                     )
                 )
             ]
@@ -1059,24 +1002,19 @@ class Obfuscator(ast.NodeTransformer):
                     targets=[ast.Name(id=d, ctx=ast.Store)],
                     value=ast.Dict(
                         keys=[ast.Str(key1), ast.Str(key2)],
-                        values=[ast.Str(value1),
-                                ast.Str(value2)],
+                        values=[ast.Str(value1), ast.Str(value2)],
                     )
                 ),
                 ast.Assign(
                     targets=[ast.Name(id=a, ctx=ast.Store)],
                     value=ast.Subscript(
-                        ctx=ast.Load,
-                        slice=ast.Index(value=ast.Str(key1)),
-                        value=ast.Name(id=d, ctx=ast.Load)
+                        ctx=ast.Load, slice=ast.Index(value=ast.Str(key1)), value=ast.Name(id=d, ctx=ast.Load)
                     )
                 ),
                 ast.Assign(
                     targets=[ast.Name(id=b, ctx=ast.Store)],
                     value=ast.Subscript(
-                        ctx=ast.Load,
-                        slice=ast.Index(value=ast.Str(key2)),
-                        value=ast.Name(id=d, ctx=ast.Load)
+                        ctx=ast.Load, slice=ast.Index(value=ast.Str(key2)), value=ast.Name(id=d, ctx=ast.Load)
                     )
                 )
             ]
@@ -1104,9 +1042,7 @@ class Obfuscator(ast.NodeTransformer):
                 ast.Assign(
                     targets=[ast.Name(id=x, ctx=ast.Store)],
                     value=ast.Call(
-                        args=[ast.Num(num1),
-                              ast.Num(num2),
-                              ast.Num(num3)],
+                        args=[ast.Num(num1), ast.Num(num2), ast.Num(num3)],
                         func=ast.Name(id='range', ctx=ast.Load),
                         keywords=[]
                     )
@@ -1118,19 +1054,11 @@ class Obfuscator(ast.NodeTransformer):
                     body=[
                         ast.Assign(
                             targets=[ast.Name(id=a, ctx=ast.Store)],
-                            value=ast.BinOp(
-                                left=ast.Name(id=num, ctx=ast.Load),
-                                op=ast.Add(),
-                                right=ast.Num(num4)
-                            )
+                            value=ast.BinOp(left=ast.Name(id=num, ctx=ast.Load), op=ast.Add(), right=ast.Num(num4))
                         ),
                         ast.Assign(
                             targets=[ast.Name(id=b, ctx=ast.Store)],
-                            value=ast.BinOp(
-                                left=ast.Name(id=num, ctx=ast.Load),
-                                op=ast.Sub(),
-                                right=ast.Num(num5)
-                            )
+                            value=ast.BinOp(left=ast.Name(id=num, ctx=ast.Load), op=ast.Sub(), right=ast.Num(num5))
                         )
                     ]
                 )
@@ -1160,21 +1088,13 @@ class Obfuscator(ast.NodeTransformer):
             return [
                 ast.Assign(
                     targets=[ast.Name(id=lst1, ctx=ast.Store)],
-                    value=ast.List(
-                        ctx=ast.Load,
-                        elts=[ast.Num(num1),
-                              ast.Num(num2),
-                              ast.Num(num3)]
-                    )
+                    value=ast.List(ctx=ast.Load, elts=[ast.Num(num1), ast.Num(num2),
+                                                       ast.Num(num3)])
                 ),
                 ast.Assign(
                     targets=[ast.Name(id=lst2, ctx=ast.Store)],
-                    value=ast.List(
-                        ctx=ast.Load,
-                        elts=[ast.Num(num4),
-                              ast.Num(num5),
-                              ast.Num(num6)]
-                    )
+                    value=ast.List(ctx=ast.Load, elts=[ast.Num(num4), ast.Num(num5),
+                                                       ast.Num(num6)])
                 ),
                 ast.For(
                     iter=ast.Call(
@@ -1189,8 +1109,7 @@ class Obfuscator(ast.NodeTransformer):
                         keywords=[]
                     ),
                     target=ast.Tuple(
-                        ctx=ast.Store,
-                        elts=[
+                        ctx=ast.Store, elts=[
                             ast.Name(id=idx, ctx=ast.Store),
                             ast.Name(id=elem, ctx=ast.Store),
                         ]
@@ -1231,27 +1150,12 @@ class Obfuscator(ast.NodeTransformer):
             return [
                 ast.If(
                     test=ast.Num(num1),
-                    body=[
-                        ast.Assign(
-                            targets=[ast.Name(id=x, ctx=ast.Store)],
-                            value=ast.Num(num2)
-                        )
-                    ],
+                    body=[ast.Assign(targets=[ast.Name(id=x, ctx=ast.Store)], value=ast.Num(num2))],
                     orelse=[
                         ast.If(
                             test=ast.Num(num3),
-                            body=[
-                                ast.Assign(
-                                    targets=[ast.Name(id=y, ctx=ast.Store)],
-                                    value=ast.Num(num4)
-                                )
-                            ],
-                            orelse=[
-                                ast.Assign(
-                                    targets=[ast.Name(id=z, ctx=ast.Store)],
-                                    value=ast.Num(num5)
-                                )
-                            ]
+                            body=[ast.Assign(targets=[ast.Name(id=y, ctx=ast.Store)], value=ast.Num(num4))],
+                            orelse=[ast.Assign(targets=[ast.Name(id=z, ctx=ast.Store)], value=ast.Num(num5))]
                         )
                     ]
                 )
@@ -1259,9 +1163,7 @@ class Obfuscator(ast.NodeTransformer):
 
         table = [ obf1, obf2, obf3, obf4, obf5, obf6 ]
 
-        return random.choices(
-            table, weights=[ 0.04, 0.16, 0.16, 0.16, 0.16, 0.16 ], k=1
-        )[0]()
+        return random.choices(table, weights=[ 0.04, 0.16, 0.16, 0.16, 0.16, 0.16 ], k=1)[0]()
 
     def _make_function(self, node):
         function_name = self.id_generator.get_random_name_random_len(max_len=10)
@@ -1275,9 +1177,7 @@ class Obfuscator(ast.NodeTransformer):
 
         self.additional_function_defs.append(
             ast.FunctionDef(
-                args=ast.arguments(
-                    args=[], defaults=[], vararg=None, kwarg=None
-                ),
+                args=ast.arguments(args=[], defaults=[], vararg=None, kwarg=None),
                 decorator_list=[],
                 body=[ast.Return(returned_value)],
                 name=function_name

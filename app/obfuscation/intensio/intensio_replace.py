@@ -100,9 +100,7 @@ class ObfuscateRenameVars:
                                     if letterKey == letterLine:
                                         # -- Begin process to check -- #
                                         if indexKey == 0:
-                                            indexExplore = indexLine + len(
-                                                key
-                                            )  # Place index position after the word
+                                            indexExplore = indexLine + len(key)  # Place index position after the word
 
                                             # -- If indexError return to next loop -- #
                                             try:
@@ -111,37 +109,24 @@ class ObfuscateRenameVars:
                                                 continue
 
                                             # -- Check the char after and before the word -- #
-                                            if re.match(
-                                                detectChars,
-                                                getIndexLineList[indexExplore]
-                                            ):
+                                            if re.match(detectChars, getIndexLineList[indexExplore]):
                                                 # Index check if word finded is not into the other word
                                                 indexExploreBefore = indexLine - 1
                                                 # Index check char after the end string found with 'detectChars' regex
                                                 indexExploreAfter = indexLine + 2
 
                                                 try:
-                                                    if not re.match(
-                                                        r"\w|\\|\%",
-                                                        getIndexLineList[
-                                                            indexExploreBefore]
-                                                    ):
+                                                    if not re.match(r"\w|\\|\%", getIndexLineList[indexExploreBefore]):
                                                         # -- Check if it's 'from' and 'import' file in line to avoid replace \
                                                         # name of file if variable is identic name to file -- #
-                                                        getLine = "".join(
-                                                            getIndexLineList
-                                                        )
+                                                        getLine = "".join(getIndexLineList)
                                                         if fileNameImport == False:
                                                             if "import" in getLine:
                                                                 if "from" in getLine:
                                                                     # -- Cut the line from the current index and check if it is \
                                                                     # not there is the keyword "import" in the line -- #
-                                                                    breakLine = getIndexLineList[:
-                                                                                                 indexLine
-                                                                                                ]
-                                                                    breakLine = "".join(
-                                                                        breakLine
-                                                                    )
+                                                                    breakLine = getIndexLineList[:indexLine]
+                                                                    breakLine = "".join(breakLine)
                                                                     if not "import" in breakLine:
                                                                         # -- It's file because only 'from'key word -- #
                                                                         checkCharAfterWord = 1
@@ -152,16 +137,10 @@ class ObfuscateRenameVars:
                                                             # -- Check if after char find by 'detectChars' variable it's \
                                                             # not ' or " -- #
                                                             elif re.match(
-                                                                r"\"|\'",
-                                                                getIndexLineList[
-                                                                    indexExploreAfter
-                                                                ]
+                                                                r"\"|\'", getIndexLineList[indexExploreAfter]
                                                             ):
                                                                 if re.match(
-                                                                    r"\[|\(|\{",
-                                                                    getIndexLineList[
-                                                                        indexExploreAfter
-                                                                        - 1]
+                                                                    r"\[|\(|\{", getIndexLineList[indexExploreAfter - 1]
                                                                 ):
                                                                     checkCharAfterWord = 0
                                                                 else:
@@ -171,12 +150,8 @@ class ObfuscateRenameVars:
                                                         # -- Only for [-rfn, --replacefilsname] feature -- #
                                                         else:
                                                             # -- check if file name is imported - #
-                                                            breakLine = getIndexLineList[:
-                                                                                         indexLine
-                                                                                        ]
-                                                            breakLine = "".join(
-                                                                breakLine
-                                                            )
+                                                            breakLine = getIndexLineList[:indexLine]
+                                                            breakLine = "".join(breakLine)
                                                             # -- If file name is imported after 'import', the file name is not \
                                                             # replaced -- #
                                                             if "import" in breakLine:
@@ -198,44 +173,27 @@ class ObfuscateRenameVars:
 
                                                 indexExploreStart = indexLine
                                                 # -- Delete -1, first letter is already increment -- #
-                                                indexExploreEnd = indexLine + len(
-                                                    key
-                                                ) - 1
+                                                indexExploreEnd = indexLine + len(key) - 1
 
                                                 # -- List contain all letters of key -- #
                                                 for getLetterKey in key:
-                                                    getCharAllInKey.append(
-                                                        getLetterKey
-                                                    )
+                                                    getCharAllInKey.append(getLetterKey)
 
                                                 # -- Check if all letters of key is equal to all letters of word -- #
-                                                for indexCheckLetter, checkLetter in enumerate(
-                                                    getIndexLineList
-                                                ):
+                                                for indexCheckLetter, checkLetter in enumerate(getIndexLineList):
                                                     if indexCheckLetter >= indexExploreStart and \
                                                     indexCheckLetter <= indexExploreEnd:
-                                                        getWord.append(
-                                                            checkLetter
-                                                        )
+                                                        getWord.append(checkLetter)
 
                                                 # -- Check if number of chars in key equal number of chars in word -- #
-                                                if list(
-                                                    set(getCharAllInKey) -
-                                                    set(getWord)
-                                                ) == []:
-                                                    checkGetWord = "".join(
-                                                        getWord
-                                                    )
-                                                    checkGetKey = "".join(
-                                                        getCharAllInKey
-                                                    )
+                                                if list(set(getCharAllInKey) - set(getWord)) == []:
+                                                    checkGetWord = "".join(getWord)
+                                                    checkGetKey = "".join(getCharAllInKey)
 
                                                     # -- Check if key == word -- #
                                                     if checkGetWord == checkGetKey:
                                                         for obfChar in value:
-                                                            charValue.append(
-                                                                obfChar
-                                                            )
+                                                            charValue.append(obfChar)
 
                                                         letterLine = letterValue
                                                         raise BreakLoop
@@ -302,16 +260,14 @@ class ObfuscateRenameVars:
                     for i in modifySearch:
                         if i not in variablesDict:
                             mixer = self.id_generator.get_random_name_random_len(
-                                self.settings['vars_renames']['min_len'],
-                                self.settings['vars_renames']['max_len']
+                                self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                             )
                             i = i.strip()
                             variablesDict[i] = mixer
                 else:
                     if search.group(1) not in variablesDict:
                         mixer = self.id_generator.get_random_name_random_len(
-                            self.settings['vars_renames']['min_len'],
-                            self.settings['vars_renames']['max_len']
+                            self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                         )
                         modifySearch = search.group(1).strip()
                         variablesDict[modifySearch] = mixer
@@ -320,8 +276,7 @@ class ObfuscateRenameVars:
             search = re.search(variablesErrorDefined, eachLine)
             if search:
                 mixer = self.id_generator.get_random_name_random_len(
-                    self.settings['vars_renames']['min_len'],
-                    self.settings['vars_renames']['max_len']
+                    self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                 )
                 if search.group(2) not in variablesDict:
                     variablesDict[search.group(2)] = mixer
@@ -335,15 +290,13 @@ class ObfuscateRenameVars:
                     for i in modifySearch:
                         if i not in variablesDict:
                             mixer = self.id_generator.get_random_name_random_len(
-                                self.settings['vars_renames']['min_len'],
-                                self.settings['vars_renames']['max_len']
+                                self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                             )
                             variablesDict[i] = mixer
                 else:
                     if search.group(1) not in variablesDict:
                         mixer = self.id_generator.get_random_name_random_len(
-                            self.settings['vars_renames']['min_len'],
-                            self.settings['vars_renames']['max_len']
+                            self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                         )
                         variablesDict[search.group(1)] = mixer
 
@@ -351,8 +304,7 @@ class ObfuscateRenameVars:
             search = re.search(functionsDefined, eachLine)
             if search:
                 mixer = self.id_generator.get_random_name_random_len(
-                    self.settings['vars_renames']['min_len'],
-                    self.settings['vars_renames']['max_len']
+                    self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                 )
                 if search.group(1) not in functionsDict:
                     if not "__init__" in search.group(1):
@@ -362,8 +314,7 @@ class ObfuscateRenameVars:
             search = re.search(classDefined, eachLine)
             if search:
                 mixer = self.id_generator.get_random_name_random_len(
-                    self.settings['vars_renames']['min_len'],
-                    self.settings['vars_renames']['max_len']
+                    self.settings['vars_renames']['min_len'], self.settings['vars_renames']['max_len']
                 )
                 if search.group(1) not in classesDict:
                     classesDict[search.group(1)] = mixer
@@ -445,10 +396,7 @@ class ObfuscateRenameVars:
                     else:
                         checkQuotePassing += 1
                         eachLine = self.EachLine(
-                            line=eachLine,
-                            dictionary=allDict.items(),
-                            fileNameImport=False,
-                            listModuleImport=False
+                            line=eachLine, dictionary=allDict.items(), fileNameImport=False, listModuleImport=False
                         )
                         result.append(eachLine)
                         continue
@@ -458,10 +406,7 @@ class ObfuscateRenameVars:
                     else:
                         checkQuotePassing += 1
                         eachLine = self.EachLine(
-                            line=eachLine,
-                            dictionary=allDict.items(),
-                            fileNameImport=False,
-                            listModuleImport=False
+                            line=eachLine, dictionary=allDict.items(), fileNameImport=False, listModuleImport=False
                         )
                         result.append(eachLine)
                         if checkQuotePassing == 2:
@@ -482,10 +427,7 @@ class ObfuscateRenameVars:
                         result.append(eachLine)
                     else:
                         eachLine = self.EachLine(
-                            line=eachLine,
-                            dictionary=allDict.items(),
-                            fileNameImport=False,
-                            listModuleImport=False
+                            line=eachLine, dictionary=allDict.items(), fileNameImport=False, listModuleImport=False
                         )
                         result.append(eachLine)
 

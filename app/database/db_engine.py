@@ -21,32 +21,23 @@ class DBEngine:
         self.db = self.client[self.db_name]
         self.collection = self.db[collection_name]
 
-        codec_options = CodecOptions(
-            tz_aware=True, tzinfo=tzlocal.get_localzone()
-        )
-        self.collection = self.collection.with_options(
-            codec_options=codec_options
-        )
+        codec_options = CodecOptions(tz_aware=True, tzinfo=tzlocal.get_localzone())
+        self.collection = self.collection.with_options(codec_options=codec_options)
 
         self.collection.create_index('file_name')
         self.collection.create_index('upload_date')
-        self.collection.create_index([( 'file_name', pymongo.ASCENDING ),
-                                      ( 'upload_date', pymongo.DESCENDING )])
+        self.collection.create_index([( 'file_name', pymongo.ASCENDING ), ( 'upload_date', pymongo.DESCENDING )])
 
     @classmethod
     def serialize_file(cls, file_name, code, tags):
         upload_date = datetime.utcnow()
 
         upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
-        local_upload_date = upload_date_with_timezone.astimezone(
-            tzlocal.get_localzone()
-        )
+        local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
 
         if file_name is None:
             random_part = cls.rnd_str_gen.render()
-            file_name = local_upload_date.strftime(
-                f'tmp_%d-%m-%Y_%H-%M_{random_part}.py'
-            )
+            file_name = local_upload_date.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
 
         return {
             'file_name': file_name,

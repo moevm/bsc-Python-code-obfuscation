@@ -23,9 +23,7 @@ class ObjectIdURLConverter(routing.BaseConverter):
         try:
             converted_id = db_engine.DBEngine.convert_to_id(value)
         except ValueError:
-            raise routing.ValidationError(
-                'invalid database identifier(={value})'
-            )
+            raise routing.ValidationError('invalid database identifier(={value})')
         else:
             return converted_id
 
@@ -39,9 +37,7 @@ class DBViewTypeConverter(routing.BaseConverter):
         try:
             converted_type = db_engine.DBViewType(value)
         except ValueError:
-            raise routing.ValidationError(
-                'invalid database view type(={value})'
-            )
+            raise routing.ValidationError('invalid database view type(={value})')
         else:
             return converted_type
 
