@@ -64,20 +64,23 @@ def view_db(db_view_type):
     else:
         raise RuntimeError(f'unknow DBViewType: {db_view_type}')
 
-    return flask.render_template('view_db.html',
-        files=files, 
-        search_tags=tags, 
+    return flask.render_template(
+        'view_db.html',
+        files=files,
+        search_tags=tags,
         StorageType=db_engine.StorageType
     )
 
 
-@app.route('/view_tags', methods=['GET', 'POST'])
+@app.route('/view_tags', methods=[ 'GET', 'POST'])
 def view_tags():
     request_method = flask.request.method
 
     if request_method == 'GET':
         tags = app.db_engine.get_all_tags()
-        return flask.render_template('view_tags.html', tags=tags, DBViewType=db_engine.DBViewType)
+        return flask.render_template(
+            'view_tags.html', tags=tags, DBViewType=db_engine.DBViewType
+        )
     elif request_method == 'POST':
         search_type = flask.request.form['search_type']
         db_view_type = db_engine.DBViewType(search_type)
@@ -85,16 +88,13 @@ def view_tags():
         tags = flask.request.form.getlist('tags')
 
         return flask.redirect(
-            flask.url_for('view_db', 
-                db_view_type=db_view_type, 
-                tags=tags
-            )
+            flask.url_for('view_db', db_view_type=db_view_type, tags=tags)
         )
     else:
         flask.abort(400)
 
 
-@app.route('/upload_text', methods=['GET', 'POST'])
+@app.route('/upload_text', methods=[ 'GET', 'POST'])
 def upload_text():
     request_method = flask.request.method
 
@@ -104,7 +104,8 @@ def upload_text():
         code = flask.request.form['code']
 
         str_tags = flask.request.form['tags']
-        tags = [tag.strip() for tag in str_tags.split(',')] if len(str_tags) != 0 else []
+        tags = [tag.strip() for tag in str_tags.split(',')
+               ] if len(str_tags) != 0 else []
 
         save_to_db = 'save_to_db' in flask.request.form
         storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
@@ -112,16 +113,15 @@ def upload_text():
         inserted_id = store_code(storage_type, code, tags)
 
         return flask.redirect(
-            flask.url_for('obfuscate_settings', 
-                storage_type=storage_type, 
-                id=inserted_id
+            flask.url_for(
+                'obfuscate_settings', storage_type=storage_type, id=inserted_id
             )
         )
     else:
         flask.abort(400)
 
 
-@app.route('/upload_file', methods=['GET', 'POST'])
+@app.route('/upload_file', methods=[ 'GET', 'POST'])
 def upload_file():
     request_method = flask.request.method
 
@@ -129,14 +129,16 @@ def upload_file():
         return flask.render_template('upload_file.html')
     elif request_method == 'POST':
         file = flask.request.files['source_code']
-        
+
         file_name = file.filename
-        
+
         code_bytes = file.read()
         code = str(code_bytes, 'utf-8')
 
         str_tags = flask.request.form['tags']
-        tags = [] if len(str_tags) == 0 else [tag.strip() for tag in str_tags.split(',')]
+        tags = [] if len(str_tags) == 0 else [
+            tag.strip() for tag in str_tags.split(',')
+        ]
 
         save_to_db = 'save_to_db' in flask.request.form
         storage_type = db_engine.StorageType.DATABASE if save_to_db else db_engine.StorageType.TEMPORARY
@@ -144,9 +146,8 @@ def upload_file():
         inserted_id = store_code(storage_type, code, tags, file_name)
 
         return flask.redirect(
-            flask.url_for('obfuscate_settings', 
-                storage_type=storage_type, 
-                id=inserted_id
+            flask.url_for(
+                'obfuscate_settings', storage_type=storage_type, id=inserted_id
             )
         )
     else:
@@ -159,7 +160,8 @@ def obfuscate_settings(storage_type, id):
     if file is None:
         flask.abort(404)
 
-    return flask.render_template('obfuscate_settings.html', 
+    return flask.render_template(
+        'obfuscate_settings.html',
         file=file,
         storage_type=storage_type,
         id=id,
@@ -167,16 +169,22 @@ def obfuscate_settings(storage_type, id):
     )
 
 
-@app.route('/obfuscate/<StorageType:storage_type>/<ObjectId:id>', methods=['POST'])
+@app.route(
+    '/obfuscate/<StorageType:storage_type>/<ObjectId:id>', methods=['POST']
+)
 def obfuscate(storage_type, id):
     file = load_code(storage_type, id)
     if file is None:
         flask.abort(404)
 
-    output_type = obfuscation.ObfuscationOutputType(flask.request.form['obfuscation_output_type'])
+    output_type = obfuscation.ObfuscationOutputType(
+        flask.request.form['obfuscation_output_type']
+    )
 
     file_name_as_path = pathlib.Path(file['file_name'])
-    file_name_as_path = file_name_as_path.with_suffix('.obfuscated' + file_name_as_path.suffix)
+    file_name_as_path = file_name_as_path.with_suffix(
+        '.obfuscated' + file_name_as_path.suffix
+    )
 
     if output_type == obfuscation.ObfuscationOutputType.TEXT_FILE:
         file_path = app.config['TMP_DIR'] / file_name_as_path
@@ -184,10 +192,13 @@ def obfuscate(storage_type, id):
         with open(file_path, 'w') as send_file:
             send_file.write(file['code'])
     elif output_type == obfuscation.ObfuscationOutputType.IMAGE:
-        file_path = app.config['TMP_DIR'] / file_name_as_path.with_suffix('.png')
+        file_path = app.config['TMP_DIR'
+                              ] / file_name_as_path.with_suffix('.png')
 
         with open(file_path, 'wb') as send_file:
-            image_bytes, msg = app.text_to_image_engine.text_to_image_bytes(file['code'])
+            image_bytes, msg = app.text_to_image_engine.text_to_image_bytes(
+                file['code']
+            )
             if image_bytes is not None:
                 send_file.write(image_bytes)
             else:
@@ -196,10 +207,12 @@ def obfuscate(storage_type, id):
         raise RuntimeError(f'unknow ObfuscationOutputType: {output_type}')
 
     file_path = file_path.resolve()
-    return flask.send_file(file_path, as_attachment=True, attachment_filename=str(file_path.name))
+    return flask.send_file(
+        file_path, as_attachment=True, attachment_filename=str(file_path.name)
+    )
 
 
-@app.route('/edit_file/<ObjectId:id>', methods=['GET', 'POST'])
+@app.route('/edit_file/<ObjectId:id>', methods=[ 'GET', 'POST'])
 def edit_file(id):
     request_method = flask.request.method
 
@@ -207,15 +220,13 @@ def edit_file(id):
         return_url = flask.request.referrer
         if return_url is None:
             return_url = flask.url_for('index_page')
-        
+
         file = load_code(db_engine.StorageType.DATABASE, id)
         if file is None:
             flask.abort(404)
 
-        return flask.render_template('edit_file.html',
-            file=file,
-            id=id,
-            return_url=return_url
+        return flask.render_template(
+            'edit_file.html', file=file, id=id, return_url=return_url
         )
     elif request_method == 'POST':
         return_url = flask.request.args.get('return_url', None)
@@ -225,9 +236,11 @@ def edit_file(id):
             return_url = urllib.parse.unquote(return_url)
 
         new_code = flask.request.form['code']
-        
+
         str_new_tags = flask.request.form['tags']
-        new_tags = [] if len(str_new_tags) == 0 else [tag.strip() for tag in str_new_tags.split(',')]
+        new_tags = [] if len(str_new_tags) == 0 else [
+            tag.strip() for tag in str_new_tags.split(',')
+        ]
 
         app.db_engine.update_file_by_id(id, new_code, new_tags)
 
@@ -252,23 +265,22 @@ def delete_file(id):
 @app.errorhandler(500)
 @app.errorhandler(RuntimeError)
 def internal(e):
-    return flask.render_template('error.html',
-        code=500, 
-        msg=e
-    )
+    return flask.render_template('error.html', code=500, msg=e)
 
 
 @app.errorhandler(404)
 def not_found(e):
-    return flask.render_template('error.html',
-        code=404, 
+    return flask.render_template(
+        'error.html',
+        code=404,
         msg='Такой страницы не существует. Проверьте URL.'
     )
 
 
 @app.errorhandler(400)
 def bad_request(e):
-    return flask.render_template('error.html',
-        code=400, 
+    return flask.render_template(
+        'error.html',
+        code=400,
         msg='Неправильный запрос. Проверьте метод запроса и URL.'
     )

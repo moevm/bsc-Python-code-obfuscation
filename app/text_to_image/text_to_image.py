@@ -13,11 +13,9 @@ class TextToImageEngine:
         'textColor': '#f8f8f2'
     }
 
-
     def __init__(self, service_url, service_port):
         self.service_url = service_url
         self.service_port = service_port
-
 
     def text_to_image_bytes(self, text):
         payload = {
