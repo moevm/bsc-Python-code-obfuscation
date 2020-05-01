@@ -5,7 +5,7 @@ import flask
 
 from app import app
 from app.database import db_engine
-from app.obfuscation import obfuscation, obfuscation_settings
+from app.obfuscation import obfuscation, obfuscation_settings, obfuscation_types
 from app.routes.msg_colors import FlaskFlashMessageType
 
 
@@ -165,7 +165,7 @@ def obfuscate_settings(storage_type, id):
         file=file,
         storage_type=storage_type,
         id=id,
-        ObfuscationOutputType=obfuscation.ObfuscationOutputType
+        ObfuscationOutputType=obfuscation_types.ObfuscationOutputType
     )
 
 
@@ -177,14 +177,14 @@ def obfuscate(storage_type, id):
     if file is None:
         flask.abort(404)
 
-    output_type = obfuscation.ObfuscationOutputType(
+    output_type = obfuscation_types.ObfuscationOutputType(
         flask.request.form['obfuscation_output_type']
     )
 
     for key1 in obfuscation_settings.settings:
         for key2 in obfuscation_settings.settings[key1]:
             for key3 in obfuscation_settings.settings[key1][key2]:
-                key = '.'.join([key1, key2, key3])
+                key = '.'.join([ key1, key2, key3 ])
                 value = flask.request.form.get(key, None)
 
                 if value:
@@ -192,9 +192,12 @@ def obfuscate(storage_type, id):
                         obfuscation_settings.settings[key1][key2][key3] = True
                     else:
                         try:
-                            obfuscation_settings.settings[key1][key2][key3] = int(value)
+                            obfuscation_settings.settings[key1][key2][
+                                key3] = int(value)
                         except ValueError:
-                            raise RuntimeError('unknown obfuscation parameter type')
+                            raise RuntimeError(
+                                'unknown obfuscation parameter type'
+                            )
                 else:
                     obfuscation_settings.settings[key1][key2][key3] = False
 
@@ -203,12 +206,12 @@ def obfuscate(storage_type, id):
         '.obfuscated' + file_name_as_path.suffix
     )
 
-    if output_type == obfuscation.ObfuscationOutputType.TEXT_FILE:
+    if output_type == obfuscation_types.ObfuscationOutputType.TEXT_FILE:
         file_path = app.config['TMP_DIR'] / file_name_as_path
 
         with open(file_path, 'w') as send_file:
             send_file.write(file['code'])
-    elif output_type == obfuscation.ObfuscationOutputType.IMAGE:
+    elif output_type == obfuscation_types.ObfuscationOutputType.IMAGE:
         file_path = app.config['TMP_DIR'
                               ] / file_name_as_path.with_suffix('.png')
 
