@@ -2,7 +2,7 @@ FROM node:10
 
 WORKDIR /var/www/app
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm i
 
