@@ -1,0 +1,9 @@
+{% macro basic_page_init(page_name, page_title) -%}
+    
+    <link rel="stylesheet" href="/static/style/pages/{{ page_name }}.css">
+
+    <script src="/static/scripts/pages/{{ page_name }}.js"></script>
+
+    <title>{{ page_title }}</title>
+    
+{%- endmacro %}

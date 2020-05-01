@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
 
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/style/pages/view_tags.css">
-
-    <title>Просмотр хэш-тэгов в БД</title>
+    {{ common.basic_page_init('view_tags', 'Просмотр хэш-тэгов в БД') }}
 
 {% endblock %}
 

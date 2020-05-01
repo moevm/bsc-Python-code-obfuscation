@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
 
     {{ super() }}
 
-    <script src="/static/scripts/w3codecolor.js"></script>
-    
-    <link rel="stylesheet" href="/static/style/pages/view_code.css">
+    {{ common.basic_page_init('view_code', file['file_name']) }}
 
-    <title>{{ file['file_name'] }}</title>
+    <script src="/static/scripts/w3codecolor.js"></script>
 
 {% endblock %}
 
@@ -50,6 +50,8 @@
         </div>
     </div>
 
-    <script src="/static/scripts/pages/view_code.js"></script>
+    <script>
+        w3CodeColor();
+    </script>
 
 {% endblock %}

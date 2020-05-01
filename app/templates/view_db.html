@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
 
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/style/pages/view_db.css">
-
-    <title>Поиск по БД</title>
+    {{ common.basic_page_init('view_db', 'Поиск по БД') }}
 
 {% endblock %}
 

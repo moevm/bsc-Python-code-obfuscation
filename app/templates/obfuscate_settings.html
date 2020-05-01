@@ -1,12 +1,14 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
     
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/style/pages/obfuscate_settings.css">
+    {{ common.basic_page_init('obfuscate_settings', 'Настройки обфускации') }}
 
-    <title>Настройки обфускации</title>
+    <script src="/static/scripts/accordion.js"></script>
 
 {% endblock %}
 

@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
 
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/style/pages/index.css">
-
-    <title>Обфускация Python кода</title>
+    {{ common.basic_page_init('index', 'Обфускация Python кода') }}
 
 {% endblock %}
 

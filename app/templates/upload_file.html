@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
+{% import 'common.html' as common %}
+
 {% block head %}
     
     {{ super() }}
 
-    <link rel="stylesheet" href="/static/style/pages/upload_file.css">
-
-    <title>Загрузить файл для обфускации</title>
+    {{ common.basic_page_init('upload_file', 'Загрузить файл для обфускации') }}
 
 {% endblock %}
 
