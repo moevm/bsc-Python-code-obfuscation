@@ -9,6 +9,15 @@ import strgen
 from bson import objectid, CodecOptions
 
 
+def get_current_local_utc_time():
+
+    current_utc_date = datetime.utcnow()
+
+    current_utc_date_with_timezone = current_utc_date.replace(tzinfo=pytz.UTC)
+    
+    return current_utc_date_with_timezone.astimezone(tzlocal.get_localzone())
+
+
 class DBEngine:
     rnd_str_gen = strgen.StringGenerator(r'[\a\u]{3-5}[\d]{1-2}')
 
@@ -30,11 +39,6 @@ class DBEngine:
 
     @classmethod
     def serialize_file(cls, file_name, code, tags):
-        upload_date = datetime.utcnow()
-
-        upload_date_with_timezone = upload_date.replace(tzinfo=pytz.UTC)
-        local_upload_date = upload_date_with_timezone.astimezone(tzlocal.get_localzone())
-
         if file_name is None:
             random_part = cls.rnd_str_gen.render()
             file_name = local_upload_date.strftime(f'tmp_%d-%m-%Y_%H-%M_{random_part}.py')
@@ -44,7 +48,7 @@ class DBEngine:
             'code': code,
             'tags': tags,
             'length': len(code),
-            'upload_date': local_upload_date
+            'upload_date': get_current_local_utc_time()
         }
 
     @staticmethod
@@ -100,7 +104,7 @@ class DBEngine:
             'code': new_code,
             'tags': new_tags,
             'length': len(new_code),
-            'modified_date': datetime.utcnow()
+            'modified_date': get_current_local_utc_time()
         }
 
         self.collection.update_one({ '_id': id}, { '$set': updated_file})
