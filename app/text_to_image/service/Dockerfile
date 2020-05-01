@@ -4,7 +4,7 @@ WORKDIR /var/www/app
 
 COPY package*.json ./
 
-RUN npm i
+RUN npm ci --only=production
 
 COPY app.js .
 COPY router.js .
