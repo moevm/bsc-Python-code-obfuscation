@@ -6,6 +6,7 @@ import flask
 from app import app
 from app.database import db_engine
 from app.obfuscation import obfuscation
+from app.routes.msg_colors import FlaskFlashMessageType
 
 
 def store_code(storage_type, code, tags, file_name=None):
