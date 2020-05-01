@@ -201,6 +201,8 @@ def obfuscate(storage_type, id):
                 else:
                     obfuscation_settings.settings[key1][key2][key3] = False
 
+    obfuscated_code = obfuscation.obfuscate(file['code'])
+
     file_name_as_path = pathlib.Path(file['file_name'])
     file_name_as_path = file_name_as_path.with_suffix(
         '.obfuscated' + file_name_as_path.suffix
@@ -210,14 +212,14 @@ def obfuscate(storage_type, id):
         file_path = app.config['TMP_DIR'] / file_name_as_path
 
         with open(file_path, 'w') as send_file:
-            send_file.write(file['code'])
+            send_file.write(obfuscated_code)
     elif output_type == obfuscation_types.ObfuscationOutputType.IMAGE:
         file_path = app.config['TMP_DIR'
                               ] / file_name_as_path.with_suffix('.png')
 
         with open(file_path, 'wb') as send_file:
             image_bytes, msg = app.text_to_image_engine.text_to_image_bytes(
-                file['code']
+                obfuscated_code
             )
             if image_bytes is not None:
                 send_file.write(image_bytes)
