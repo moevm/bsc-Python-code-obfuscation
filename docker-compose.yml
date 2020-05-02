@@ -37,3 +37,5 @@ services:
     build:
       context: app/text_to_image/service
     image: text-to-image:latest
+    environment:
+      PORT: 8080
