@@ -4,6 +4,9 @@ volumes:
   apache-logs:
     external: true
     name: python-code-obfuscation-apache-logs
+  app-logs:
+    external: true
+    name: python-code-obfuscation-app-logs
   mongo-data:
     external: true
     name: python-code-obfuscation-db-data
@@ -16,9 +19,11 @@ services:
       - 5000:80
     volumes:
       - apache-logs:/var/log/apache2
+      - app-logs:/var/www/app/
     environment:
       TZ: Europe/Moscow
       APACHE_LOG_LEVEL: info
+      PYTHON_CODE_OBFUSCATION_LOG_LEVEL: 20 # DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50
       PYTHON_CODE_OBFUSCATION_MONGODB_URL: mongodb
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME: python-code-obfuscation
       PYTHON_CODE_OBFUSCATION_MONGODB_DB_COLLECTION: source-codes

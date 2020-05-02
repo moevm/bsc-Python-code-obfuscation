@@ -59,7 +59,22 @@ def main():
         help='maximum age in seconds of temporary files stored in RAM'
     )
 
+    arg_parser.add_argument(
+        '--log_dir',
+        default='.', type=str,
+        help='logging directory of application'
+    )
+
+    arg_parser.add_argument(
+        '--log_level',
+        default=20, type=int,
+        help='logging level of application: DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50'
+    )
+
     args = arg_parser.parse_args()
+
+    os.environ['PYTHON_CODE_OBFUSCATION_LOG_DIR'] = args.log_dir
+    os.environ['PYTHON_CODE_OBFUSCATION_LOG_LEVEL'] = str(args.log_level)
 
     os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_URL'] = args.db_url
     os.environ['PYTHON_CODE_OBFUSCATION_MONGODB_DB_NAME'] = args.db_name
