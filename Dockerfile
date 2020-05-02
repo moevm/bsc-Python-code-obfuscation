@@ -1,7 +1,9 @@
 FROM ubuntu:18.04
 
-RUN DEBIAN_FRONTEND=noninteractive apt update && apt install --no-install-recommends -y apt-utils
-RUN DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y \
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt update && apt install --no-install-recommends -y -q apt-utils
+RUN apt install --no-install-recommends -y -q \
     build-essential \
     apache2 \
     apache2-dev \
@@ -11,7 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y \
     python3-setuptools \
     python3-wheel
 
-RUN apt clean && apt-get autoremove
+RUN apt clean && apt autoremove
 
 COPY requirements.txt /tmp
 RUN pip3 --no-cache-dir install -r /tmp/requirements.txt
