@@ -1,6 +1,7 @@
 import os
 import tempfile
 import pathlib
+import logging
 
 import flask
 import expiringdict
@@ -10,6 +11,19 @@ from app.routes import url_converters
 from app.text_to_image import text_to_image
 
 app = flask.Flask(__name__)
+
+app.config['LOG_DIR'] = os.environ['PYTHON_CODE_OBFUSCATION_LOG_DIR']
+
+app.config['LOG_FILE'] = str(pathlib.Path(app.config['LOG_DIR']) / 'app.log')
+
+app.config['LOG_LEVEL'] = int(os.environ['PYTHON_CODE_OBFUSCATION_LOG_LEVEL'])
+
+logging.basicConfig(
+    filename=pathlib.Path(app.config['LOG_FILE']).absolute(),
+    level=app.config['LOG_LEVEL'],
+    format='%(levelname)s %(asctime)s %(process)d %(message)s %(filename)s %(funcName)s %(lineno)d',
+    datefmt='%Y-%m-%d %I:%M:%S %p'
+)
 
 app.config['SECRET_KEY'] = os.urandom(16)
 

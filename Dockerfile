@@ -28,7 +28,9 @@ RUN a2ensite app-apache-config
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
+
 ENV APACHE_LOG_DIR /var/log/apache2
+ENV PYTHON_CODE_OBFUSCATION_LOG_DIR /var/www/app/
 
 EXPOSE 80
 
