@@ -34,6 +34,11 @@ def load_code(storage_type, id):
 
 @app.route('/')
 def index_page():
+    logging.info('hey info')
+    logging.warning('hey warning')
+    logging.error('hey error')
+    logging.debug('hey debug')
+    logging.critical('hey critical')
     return flask.render_template('index.html', DBViewType=db_engine.DBViewType)
 
 
